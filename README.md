@@ -2,5 +2,9 @@
 
 
 # Database
-Cinemania using a SQLite database for the storage of information regarding the function of the website. Currently the Account table has been created with the following variables: accountID, FName, LName, Email.
+Cinemania using a SQLite database for the storage of information regarding the function of the website. 
+Currently the tables listed below:
+  account: accountID, FName, LName, Email.
+  contentList: contentListID, listName, listDescription, contentIDs.
+  content: contentID, contentName, contentType, contentDescription, contentGenres, contentRating, whereToWatch, watchStatus, reviewList.
 More variables and tables to be added soon.

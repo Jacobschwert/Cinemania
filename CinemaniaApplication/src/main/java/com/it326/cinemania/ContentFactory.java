@@ -20,7 +20,7 @@ public class ContentFactory {
         }
     }
 
-    /* Method that is meant to return a tv show or movie and populate its attributes accordingly. */
+    /* Method that is meant to return a tv show or movie after populating its attributes accordingly. */
     public Content getContent(contentType cType){
         checkInstance();
         switch(cType){

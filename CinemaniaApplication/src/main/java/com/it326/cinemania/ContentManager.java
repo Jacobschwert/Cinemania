@@ -1,12 +1,12 @@
 package com.it326.cinemania;
-import java.util.List;
+import java.util.ArrayList;
 
 public class ContentManager {
-    private List<ContentList> reccomendationLists;
+    private ArrayList<ContentList> reccomendationLists;
     private int cmID;
     private Account user;
-    private List<ContentList> contentLists;
-    private List<ContentList> pinnedLists;
+    private ArrayList<ContentList> contentLists;
+    private ArrayList<ContentList> pinnedLists;
 
     // Enums of this type are meant to indicate special behaviour from the generateReccomendationList class.
     public enum reccomendationType {
@@ -28,7 +28,7 @@ public class ContentManager {
      * 
      * I'll need some way to ping The Movie Database (TMDB) to fuffill the query, might make some sort of TMBD communicator class or something for this.
      */
-    public List<Content> contentSearch(String searchQuery){
+    public ArrayList<Content> contentSearch(String searchQuery){
 
     }
 
@@ -60,7 +60,7 @@ public class ContentManager {
      * Maybe it would be best to output the different reccomendation list types, allow the user to pick a type, then show the corresponding
      * list for the type. Then the user could select content from that specific list to view.
     */
-    public List<ContentList> getReccomendationLists(){
+    public ArrayList<ContentList> getReccomendationLists(){
         return reccomendationLists;
     }
 
@@ -69,7 +69,7 @@ public class ContentManager {
      * at the beginning of the list. The Controller will likely make use of this method in some way in order to display
      * user accounts to view.
      */
-    public List<Account> userSearch(String searchQuery){
+    public ArrayList<Account> userSearch(String searchQuery){
 
     }
 
@@ -85,7 +85,7 @@ public class ContentManager {
      * This information may also be stored in the database, meaning that this information may have to be loaded
      * from the database first.
      */
-    public List<ContentList> getPinnedLists(){
+    public ArrayList<ContentList> getPinnedLists(){
         return pinnedLists;
     }
 

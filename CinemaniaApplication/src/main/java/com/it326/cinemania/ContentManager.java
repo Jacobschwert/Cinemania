@@ -58,7 +58,8 @@ public class ContentManager {
 
     /*The point of this method is to get cached reccomendations or to generate reccomendations to cache and return. 
      * Maybe it would be best to output the different reccomendation list types, allow the user to pick a type, then show the corresponding
-     * list for the type. Then the user could select content from that specific list to view.
+     * list for the type. Then the user could select content from that specific list to view. This should probably return a COPY of the
+     * reccomendationLists ArrayList rather than the actual list.
     */
     public ArrayList<ContentList> getReccomendationLists(){
         return reccomendationLists;

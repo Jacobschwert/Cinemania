@@ -49,10 +49,6 @@ public class Account {
         //Maybe ask user if they wish to delete?
     }
 
-    public void editAccount(boolean bool){
-        
-    }
-
     private void deleteAccount(){
         //interact with db and delete row matching the accountID
     }

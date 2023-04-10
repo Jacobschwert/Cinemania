@@ -1,9 +1,20 @@
--- SQLite, if a table needs to be restructured, just drop it and recreate
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS contentList;
+DROP TABLE IF EXISTS content;
+DROP TABLE IF EXISTS contentManager;
+DROP TABLE IF EXISTS feedback;
+
 CREATE TABLE account (
     accountID INTEGER PRIMARY KEY,
-    FName TEXT,
-    LName TEXT,
-    Email TEXT NOT NULL
+    uName TEXT,
+    password TEXT,
+    Email TEXT NOT NULL,
+    cManager INTEGER,
+    comments TEXT,
+    reviews TEXT,
+    FOREIGN KEY(cManager) REFERENCES contentManager(cmID), 
+    FOREIGN KEY(comments) REFERENCES feedback(feedbackID),
+    FOREIGN KEY(reviews) REFERENCES feedback(feedbackID)
 );
 
 CREATE TABLE contentList (
@@ -11,18 +22,34 @@ CREATE TABLE contentList (
     authorID INTEGER,
     listName TEXT,
     listDescription TEXT,
-    contentIDs TEXT, -- This will be saved in a string, but interpretted as a list
+    contentIDs TEXT, 
     FOREIGN KEY(authorID) REFERENCES account(accountID)
 );
 
 CREATE TABLE content (
     contentID INTEGER PRIMARY KEY,
     contentName TEXT,
-    contentType INTEGER,
     contentDescription TEXT,
-    contentGenres TEXT, -- See previous comment
+    contentGenres TEXT,
     contentRating REAL,
-    whereToWatch TEXT,
-    watchStatus INTEGER, -- Store 0 for unwatched and 1 for watched
-    reviewList TEXT -- List of review IDs(TBC) stored similarly as above
+    reviews TEXT,
+    FOREIGN KEY(reviews) REFERENCES feedback(feedbackID)
+);
+
+CREATE TABLE contentManager (
+    cmID INTEGER PRIMARY KEY,
+    user INTEGER,
+    contentLists INTEGER,
+    pinnedLists INTEGER,
+    whereToWatch TEXT,    
+    watchStatus INTEGER,
+    reccomendationLists INTEGER
+);
+
+CREATE TABLE feedback (
+    feedbackID INTEGER PRIMARY KEY,
+    feedbackContent TEXT,
+    likes INTEGER,
+    feedbackAuthor INTEGER,
+    FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 );

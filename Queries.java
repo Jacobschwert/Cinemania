@@ -1,32 +1,19 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Queries {
-    
-    private Connector connector;
-    private Connection connection;
-    
-    public Queries(Connector connector) {
-        this.connector = connector;
-        this.connection = connector.getConnection();
+    public static ResultSet executeQuery(String sql) throws SQLException {
+        Connection conn = Connector.connect();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        return stmt.executeQuery();
+    }
+
+    public static int executeUpdate(String sql) throws SQLException {
+        Connection conn = Connector.connect();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        return stmt.executeUpdate();
     }
     
-    public ResultSet executeQuery(String query) throws SQLException {
-        Statement statement = connection.createStatement();
-        return statement.executeQuery(query);
-    }
-    
-    public int executeUpdate(String query) throws SQLException {
-        Statement statement = connection.createStatement();
-        return statement.executeUpdate(query);
-    }
-    
-    public PreparedStatement prepareStatement(String query) throws SQLException {
-        return connection.prepareStatement(query);
-    }
-    
-    public void close() throws SQLException {
-        if (connection != null) {
-            connection.close();
-        }
-    }
 }

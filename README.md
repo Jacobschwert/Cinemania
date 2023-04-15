@@ -9,3 +9,7 @@ Currently the tables listed below:
 - content: contentID, contentName, contentDescription, contentGenres, contentRating, reviews.  
 - feedback: feedbackID, feedbackContent, likes, feedbackAuthor.
 - contentManager: cmID, user, contentLists, pinnedLists, whereToWatch, watchStatus, reccomendationLists.
+
+# Database usage
+To connect to the SQLite Database you need to download the jar file found the "lib" folder and add it to your class path.
+Currently you will need to create the queries in your own classes and pass that in to either the executeQuery() or executeUpdate(), but changes will be made to that soon.

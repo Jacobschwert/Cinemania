@@ -2,11 +2,11 @@
  * ContentList.java
  * 
  * @author Jonathan Bogue
- * @version 0.1
+ * @version 0.2
  * 
  * Description: The ContentList class manages a list of Content objects and is controlled by a ContentManager object. The ContentList itself
  * includes an ID, name, description, and of course a list of Contents; it is possible to edit each of these with the provided methods
- * except for the ID, which is intended to be done through the ContentManager, note that this is an unfinished and untested version.
+ * except for the ID, which is intended to be done through the ContentManager, note that this is an unfinished and marginally tested version.
  * 
  */
 
@@ -21,6 +21,7 @@ public class ContentList
     private String contentListName;
     private String contentListDescription;
     private ArrayList<Content> contents;
+    private boolean markedForDeletion;
     
     /**
      * Default Constructor
@@ -34,6 +35,7 @@ public class ContentList
         this.contentListName = "New List";
         this.contentListDescription = "(Edit the list to change the description.)";
         this.contents = new ArrayList<Content>();
+        this.markedForDeletion = false;
     }
 
     /**
@@ -45,7 +47,7 @@ public class ContentList
      * @param contentListDescription - The description of the content list
      * @param contents - The Content objects stored within the list
      */
-    private ContentList(int contentListID, int numContents, String contentListName, String contentListDescription, ArrayList<Content> contents)
+    public ContentList(int contentListID, int numContents, String contentListName, String contentListDescription, ArrayList<Content> contents)
     {
         this.contentListID = contentListID;
         this.numContents = numContents;
@@ -54,6 +56,7 @@ public class ContentList
         this.contents = new ArrayList<Content>();
         for (int i = 0; i < numContents; i++)
             this.contents.add(contents.get(i));
+        this.markedForDeletion = false;
     }
 
     /**
@@ -94,6 +97,16 @@ public class ContentList
     public ArrayList<Content> getList()
     {
         return this.contents;
+    }
+
+    /**
+     * Returns true/false depending on if this list is to be deleted (functionally similar to "getting" the variable).
+     * 
+     * @return True/False
+     */
+    public boolean checkMarkedForDeletion()
+    {
+        return this.markedForDeletion;
     }
 
     /**
@@ -201,6 +214,14 @@ public class ContentList
                                 // ************************************************************************************
                                 // Need to establish going from ContentManager to Content, picking Content to add, then
                                 // coming back to the ContentList to add it.
+                                if (this.contents.size() < LIST_HARD_CAP)
+                                {
+                                    // this.contents.add(Content);
+                                }
+                                else
+                                {
+                                    System.out.println("List capacity reached, cannot add more content.");
+                                }
                                 break;
 
                             // Remove content from the list.
@@ -280,8 +301,9 @@ public class ContentList
                     if (confirm == 'y')
                     {
                         // *****************************************************************************************
-                        // Like adding Content, there will have to be communication with the Content Manager to have
-                        // this list deleted as it would be the one to store them.
+                        // The ContentManager will have to check whether or not this list is marked for deletion (using
+                        // the checkMarkedForDeletion() method) to determine if this list should be deleted.
+                        this.markedForDeletion = true;
                     }
                     break;
 
@@ -319,7 +341,7 @@ public class ContentList
                 default:
                     System.out.println("Error: Unknown option selected, continuing...");
             }
-        } while (option != 7);
+        } while (!this.markedForDeletion && option != 7);
     }
 
     /**

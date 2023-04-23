@@ -1,4 +1,3 @@
-package com.it326.cinemania;
 import java.util.ArrayList;
 
 public class ContentManager {
@@ -8,7 +7,7 @@ public class ContentManager {
     private ArrayList<ContentList> contentLists;
     private ArrayList<ContentList> pinnedLists;
 
-    // Enums of this type are meant to indicate special behaviour from the generateReccomendationList class.
+    // Enums of this type are meant to indicate special behaviour from the generateReccomendationList method.
     public enum reccomendationType {
         POPULAR,
         ACTION,

@@ -1,5 +1,3 @@
-package com.it326.cinemania;
-
 public class ContentFactory {
     private static ContentFactory instance = null;
 

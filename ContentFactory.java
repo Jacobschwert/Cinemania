@@ -1,5 +1,4 @@
 public class ContentFactory {
-    private static ContentFactory instance = null;
 
     public enum contentType{
         TVSHOW,
@@ -11,29 +10,13 @@ public class ContentFactory {
 
     }
 
-    // Helper method to ensure that an instance exists.
-    private static void checkInstance(){
-        if(instance == null){
-            instance = new ContentFactory();
-        }
-    }
-
     /* Method that is meant to return a tv show or movie after populating its attributes accordingly. */
-    public Content getContent(contentType cType){
-        checkInstance();
+    public static Content getContent(contentType cType){
         switch(cType){
             case TVSHOW:
                 break;
             case MOVIE:
                 break;
         }
-    }
-
-    /*Method that allows other classes to get the ContentFactory instance.
-     *This method may not be necessary.
-    */
-    public static ContentFactory getInstance(){
-        checkInstance();
-        return instance;
     }
 }

@@ -1,7 +1,5 @@
 public class TMDBCommunicator {
 
-    
-    
     public String[] getReccomendationListJSON(ContentManager.reccomendationType rType){
         switch(rType){
             case POPULAR:

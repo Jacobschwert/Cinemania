@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Content {
+public abstract class Content {
     private int contentID;
     private String contentName;
     private String contentDescription;

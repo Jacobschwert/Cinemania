@@ -19,4 +19,9 @@ public class ContentFactory {
                 break;
         }
     }
+
+    /* Method that is meant to return a ContentList from strings of JSON containing content information. */
+    public ContentList getContentList(String[] contentJson){
+        
+    }
 }

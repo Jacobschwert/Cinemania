@@ -77,7 +77,7 @@ public class ContentManager {
      * The Controller will likely be the class that passes in the proper ContentList.
      * This also means that the Controller needs a way to allow the user to view pinned lists.
      */
-    public void pinList(ContentList){
+    public void pinList(ContentList listToPin){
 
     }
 

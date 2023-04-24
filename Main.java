@@ -23,7 +23,7 @@ public class Main {
                     scanner.nextLine();
                     
                     try {
-                        feedback = new Feedback(summary, rating);
+                        feedback = new Review(summary, rating);
                         System.out.println("Feedback created successfully.");
                     } catch (IllegalArgumentException e) {
                         System.out.println("Failed to create feedback: " + e.getMessage());
@@ -34,8 +34,7 @@ public class Main {
                     if (feedback == null) {
                         System.out.println("No feedback to view.");
                     } else {
-                        System.out.println("Feedback summary: " + feedback.getSummary());
-                        System.out.println("Feedback rating: " + feedback.getRating());
+                        System.out.println("Feedback summary: " + feedback.getFeedbackSummary());
                         System.out.println("Feedback likes: " + feedback.getLikes());
                         
                         System.out.println("Select an option:");

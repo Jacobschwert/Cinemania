@@ -10,7 +10,9 @@ public class ContentFactory {
 
     }
 
-    /* Method that is meant to return a tv show or movie after populating its attributes accordingly. */
+    /* Method that is meant to return a tv show or movie after populating its attributes accordingly. 
+     * This will likely be refactored to manipulate JSON or JSON parsed into java classes.
+    */
     public static Content getContent(contentType cType){
         switch(cType){
             case TVSHOW:

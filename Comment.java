@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Comment implements Feedback{
+public class Comment extends Feedback{
     private String text;
     private int likes;
     private Account feedbackAuthor;
@@ -19,11 +19,11 @@ public class Comment implements Feedback{
       input.close();
     }
 
-    public void likeFeedback() {
+    public void addLike() {
         this.likes++;
     }
 
-    public void dislikeFeedback() {
+    public void removeLike() {
         if (this.likes > 0) {
             this.likes--;
         }
@@ -83,5 +83,9 @@ public class Comment implements Feedback{
     @Override
     public Account getFeedbackAuthor() {
         return feedbackAuthor;
+    }
+
+    public String toString() {
+        return text;
     }
 }

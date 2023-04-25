@@ -1,19 +1,42 @@
-public interface Feedback {
-    int getFeedbackID();
-    void setFeedbackID(int feedbackID);
+public abstract class Feedback implements Likeable{
+    private int feedbackID;
+    private String feedbackSummary;
+    private int likes;
+    private Account feedbackAuthor;
 
-    String getFeedbackSummary();
-    void setFeedbackSummary(String feedbackSummary);
+    public int getFeedbackID() {
+        return feedbackID;
+    }
 
-    int getLikes();
+    public void setFeedbackID(int feedbackID) {
+        this.feedbackID = feedbackID;
+    }
 
-    Account getFeedbackAuthor();
-    void setFeedbackAuthor(Account feedbackAuthor);
+    public String getFeedbackSummary() {
+        return feedbackSummary;
+    }
 
-    void editFeedback();
+    public void setFeedbackSummary(String feedbackSummary) {
+        this.feedbackSummary = feedbackSummary;
+    }
 
-    void deleteFeedback();
+    public int getLikes() {
+        return likes;
+    }
 
-    void likeFeedback();
-    void dislikeFeedback();
+    public Account getFeedbackAuthor() {
+        return feedbackAuthor;
+    }
+
+    public void setFeedbackAuthor(Account feedbackAuthor) {
+        this.feedbackAuthor = feedbackAuthor;
+    }
+
+    public abstract void editFeedback();
+
+    public abstract void deleteFeedback();
+
+    public abstract void addLike();
+
+    public abstract void removeLike();
 }

@@ -1,11 +1,13 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Review implements Feedback{
+public class Review extends Feedback{
     private String summary;
     private int rating;
     private int likes;
     private Account feedbackAuthor;
     private int feedbackID;
+    private ArrayList<Comment> commentList;
     
     public Review(String summary, int rating) throws IllegalArgumentException {
         this(summary, rating, 0);
@@ -63,13 +65,13 @@ public class Review implements Feedback{
     }
     
     @Override
-    public void likeFeedback() {
+    public void addLike() {
         this.likes++;
         System.out.println("Feedback liked. Current number of likes: " + this.likes);
     }
 
     @Override
-    public void dislikeFeedback() {
+    public void removeLike() {
         this.likes--;
         System.out.println("Feedback disliked. Current number of likes: " + this.likes);
     }
@@ -132,4 +134,24 @@ public class Review implements Feedback{
         }
         scanner.close();
     }
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
+    }
+
+    public ArrayList<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public String toString() {
+        String comments = "";
+        if(commentList != null && commentList.size() > 0) {
+            comments = "\nComments:\n";
+            for(Comment c : commentList) {
+                comments += "\t" + c.toString() + "\n";
+            }
+        }
+        return "Summary: " + summary + "\n" + "Rating: " + rating + comments;
+    }
+    
 }

@@ -1,81 +1,70 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        ArrayList<Review> reviews = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        Feedback feedback = null;
-        
-        while (true) {
+
+        int option = 0;
+        while (option != 3) {
             System.out.println("Select an option:");
-            System.out.println("1. Create feedback");
-            System.out.println("2. View feedback");
+            System.out.println("1. View Reviews");
+            System.out.println("2. Create Reviews");
             System.out.println("3. Exit");
-            int option = scanner.nextInt();
+            option = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
-            
+
             switch (option) {
                 case 1:
-                    System.out.println("Enter feedback summary:");
-                    String summary = scanner.nextLine();
-                    
-                    System.out.println("Enter feedback rating (1-5):");
-                    int rating = scanner.nextInt();
-                    scanner.nextLine();
-                    
-                    try {
-                        feedback = new Review(summary, rating);
-                        System.out.println("Feedback created successfully.");
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Failed to create feedback: " + e.getMessage());
-                    }
-                    break;
-                    
-                case 2:
-                    if (feedback == null) {
-                        System.out.println("No feedback to view.");
+                    if (reviews.isEmpty()) {
+                        System.out.println("No reviews available.");
                     } else {
-                        System.out.println("Feedback summary: " + feedback.getFeedbackSummary());
-                        System.out.println("Feedback likes: " + feedback.getLikes());
-                        
-                        System.out.println("Select an option:");
-                        if (feedback.getLikes() == 0) {
-                            System.out.println("1. Like feedback");
-                        } else {
-                            System.out.println("1. Dislike feedback");
+                        System.out.println("Select a review to view:");
+                        for (int i = 0; i < reviews.size(); i++) {
+                            System.out.println((i + 1) + ". " + reviews.get(i).getFeedbackSummary());
                         }
-                        System.out.println("2. Edit feedback");
-                        int subOption = scanner.nextInt();
-                        scanner.nextLine();
-                        
-                        switch (subOption) {
-                            case 1:
-                                if (feedback.getLikes() == 0) {
-                                    feedback.likeFeedback();
-                                } else {
-                                    feedback.dislikeFeedback();
-                                }
-                                break;
-                                
-                            case 2:
-                                feedback.editFeedback();
-                                break;
-                                
-                            default:
-                                System.out.println("Invalid option. Please try again.");
-                                break;
+                        int reviewOption = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline character
+
+                        if (reviewOption > 0 && reviewOption <= reviews.size()) {
+                            Review selectedReview = reviews.get(reviewOption - 1);
+                            System.out.println("Selected review: " + selectedReview.toString());
+
+                            System.out.println("Enter a comment or type 'exit' to go back:");
+                            String comment = scanner.nextLine();
+                            if (!comment.equals("exit")) {
+                                Comment newComment = new Comment();
+                                selectedReview.addComment(newComment);
+                                System.out.println("Comment added successfully.");
+                            }
+                        } else {
+                            System.out.println("Invalid option. Please try again.");
                         }
                     }
                     break;
-                    
+
+                case 2:
+                    System.out.println("Enter review summary:");
+                    String summary = scanner.nextLine();
+                    System.out.println("Enter rating (1-5):");
+                    int rating = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline character
+
+                    Review newReview = new Review(summary, rating);
+                    reviews.add(newReview);
+                    System.out.println("Review created successfully.");
+                    break;
+
                 case 3:
                     System.out.println("Exiting program.");
-                    System.exit(0);
                     break;
-                    
+
                 default:
                     System.out.println("Invalid option. Please try again.");
                     break;
             }
         }
+        scanner.close();
     }
 }

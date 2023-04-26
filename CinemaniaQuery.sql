@@ -3,6 +3,10 @@ DROP TABLE IF EXISTS contentList;
 DROP TABLE IF EXISTS content;
 DROP TABLE IF EXISTS contentManager;
 DROP TABLE IF EXISTS feedback;
+DROP TABLE IF EXISTS watchStatus;
+DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS review;
+
 
 CREATE TABLE account (
     accountID INTEGER PRIMARY KEY,
@@ -46,7 +50,31 @@ CREATE TABLE contentManager (
     reccomendationLists INTEGER
 );
 
-CREATE TABLE feedback (
+-- CREATE TABLE feedback (
+--     feedbackID INTEGER PRIMARY KEY,
+--     feedbackContent TEXT,
+--     likes INTEGER,
+--     feedbackAuthor INTEGER,
+--     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
+-- );
+
+CREATE TABLE watchStatus (
+    uID INTEGER,
+    cID INTEGER,
+    status TEXT,
+    FOREIGN KEY(uID) REFERENCES account(accountID),
+    FOREIGN KEY(cID) REFERENCES content(contentID)
+);
+
+CREATE TABLE review (
+    feedbackID INTEGER PRIMARY KEY,
+    feedbackContent TEXT,
+    likes INTEGER,
+    feedbackAuthor INTEGER,
+    FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
+);
+
+CREATE TABLE comment (
     feedbackID INTEGER PRIMARY KEY,
     feedbackContent TEXT,
     likes INTEGER,

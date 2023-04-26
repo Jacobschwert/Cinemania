@@ -5,18 +5,16 @@ public class Comment extends Feedback{
     private int likes;
     private Account feedbackAuthor;
     private int feedbackID;
+    private Review reviewTarget;
+    private int targetID;
 
-    public Comment() {
-        this.text = "";
+    public Comment(String text) throws IllegalArgumentException {
+        if (text.length() > 150) {
+            throw new IllegalArgumentException("Comment cannot exceed 150 characters");
+        }
+        this.text = text;
         this.likes = 0;
-    }
-
-    public void createComment() {
-      Scanner input = new Scanner(System.in);
-      String text = input.nextLine();
-      this.text = text;
-      this.likes = 0;
-      input.close();
+        targetID = reviewTarget.getFeedbackID();
     }
 
     public void addLike() {

@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,12 +9,17 @@ public class Review extends Feedback{
     private Account feedbackAuthor;
     private int feedbackID;
     private ArrayList<Comment> commentList;
+    private Content reviewTarget;
+    private int targetID;
+    private Queries query;
     
-    public Review(String summary, int rating) throws IllegalArgumentException {
+    public Review(String summary, int rating) throws IllegalArgumentException, SQLException {
         this(summary, rating, 0);
+        //targetID = reviewTarget.getContentID;
+        query.executeQuery(this.toString());
     }
     
-    public Review(String summary, int rating, int likes) throws IllegalArgumentException {
+    public Review(String summary, int rating, int likes) throws IllegalArgumentException, SQLException {
         if (rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Rating should be between 1 and 5");
         }
@@ -23,10 +29,16 @@ public class Review extends Feedback{
         this.summary = summary;
         this.rating = rating;
         this.likes = likes;
+        //targetID = reviewTarget.getContentID;
+        query.executeQuery(this.toString());
     }
 
     public int getRating() {
         return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Override
@@ -78,6 +90,10 @@ public class Review extends Feedback{
     
     @Override
     public void deleteFeedback() {
+        //Placeholder delete functionality:
+        setFeedbackAuthor(null);
+        setFeedbackSummary(null);
+
         //implement in future
     }
 
@@ -101,7 +117,7 @@ public class Review extends Feedback{
                     if (newSummary.length() > 300) {
                         System.out.println("Summary cannot exceed 300 characters.");
                     } else {
-                        this.summary = newSummary;
+                        setFeedbackSummary(newSummary);
                         System.out.println("Summary updated successfully.");
                     }
                     break;
@@ -112,7 +128,7 @@ public class Review extends Feedback{
                     if (newRating < 1 || newRating > 5) {
                         System.out.println("Rating should be between 1 and 5.");
                     } else {
-                        this.rating = newRating;
+                        setRating(newRating);
                         System.out.println("Rating updated successfully.");
                     }
                     break;
@@ -121,6 +137,7 @@ public class Review extends Feedback{
                     System.out.println("Are you sure you want to delete this review? (Y/N)");
                     String confirm = scanner.nextLine().toLowerCase();
                     if (confirm.equals("y")) {
+                        deleteFeedback();
                         System.out.println("Review deleted successfully.");
                     } else {
                         option = 0;

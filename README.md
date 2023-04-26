@@ -15,4 +15,4 @@ Currently the tables listed below:
 
 # Database usage
 To connect to the SQLite Database you need to download the jar file found the "lib" folder and add it to your class path.
-Currently you will need to create the queries in your own classes and pass that in to either the executeQuery() or executeUpdate(), but changes will be made to that soon.
+Currently you will need to create the queries in your own classes and pass that in to either the executeQuery() or executeUpdate(), but changes will be made to that soon. When you wish to "SELECT" from the database use the executeQuery. When you want to "INSERT", "DELETE" or "UPDATE" you use executeUpdate().

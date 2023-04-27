@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS contentList;
 DROP TABLE IF EXISTS content;
+DROP TABLE IF EXISTS movie;
+DROP TABLE IF EXISTS tvShow;
 DROP TABLE IF EXISTS contentManager;
 DROP TABLE IF EXISTS feedback;
 DROP TABLE IF EXISTS watchStatus;
@@ -16,9 +18,7 @@ CREATE TABLE account (
     cManager INTEGER,
     comments TEXT,
     reviews TEXT,
-    FOREIGN KEY(cManager) REFERENCES contentManager(cmID), 
-    FOREIGN KEY(comments) REFERENCES feedback(feedbackID),
-    FOREIGN KEY(reviews) REFERENCES feedback(feedbackID)
+    FOREIGN KEY(cManager) REFERENCES contentManager(cmID)
 );
 
 CREATE TABLE contentList (
@@ -30,14 +30,28 @@ CREATE TABLE contentList (
     FOREIGN KEY(authorID) REFERENCES account(accountID)
 );
 
-CREATE TABLE content (
-    contentID INTEGER PRIMARY KEY,
-    contentName TEXT,
-    contentDescription TEXT,
-    contentGenres TEXT,
-    contentRating REAL,
-    reviews TEXT,
-    FOREIGN KEY(reviews) REFERENCES feedback(feedbackID)
+CREATE TABLE tvShow (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    description TEXT,
+    genre TEXT,
+    rating REAL,
+    reviews INTEGER,
+    episodes INTEGER,
+    seasons INTEGER,
+    statusID INTEGER, --We will create a random ID number to represent the status of each media content as they are marked
+    FOREIGN KEY(statusID) REFERENCES watchStatus(statusID) --The default will as unwatched
+);
+
+CREATE TABLE movie (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    description TEXT,
+    genre TEXT,
+    rating REAL,
+    reviews INTEGER,
+    statusID INTEGER,
+    FOREIGN KEY(statusID) REFERENCES watchStatus(statusID)
 );
 
 CREATE TABLE contentManager (
@@ -58,26 +72,29 @@ CREATE TABLE contentManager (
 --     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 -- );
 
-CREATE TABLE watchStatus (
+CREATE TABLE watchStatus ( --This table was kept in to allow the application to show multiple instances of if something was watched
+    statusID INTEGER PRIMARY KEY, --There will be repeats of the status ID, but will be differentiated by different user ID's
     uID INTEGER,
-    cID INTEGER,
-    status TEXT,
-    FOREIGN KEY(uID) REFERENCES account(accountID),
-    FOREIGN KEY(cID) REFERENCES content(contentID)
+    status INTEGER,
+    FOREIGN KEY(uID) REFERENCES account(accountID)
 );
 
 CREATE TABLE review (
-    feedbackID INTEGER PRIMARY KEY,
-    feedbackContent TEXT,
+    reviewID INTEGER PRIMARY KEY,
+    reviewSummary TEXT,
     likes INTEGER,
-    feedbackAuthor INTEGER,
-    FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
+    reviewAuthor INTEGER,
+    reviewTarget INTEGER,
+    rating INTEGER, --How to show list of comments
+    comments INTEGER,
+    FOREIGN KEY(reviewAuthor) REFERENCES account(accountID)
 );
 
 CREATE TABLE comment (
-    feedbackID INTEGER PRIMARY KEY,
-    feedbackContent TEXT,
+    commentID INTEGER PRIMARY KEY,
+    commentSummary TEXT,
     likes INTEGER,
-    feedbackAuthor INTEGER,
-    FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
+    commentAuthor INTEGER,
+    commentTarget INTEGER,
+    FOREIGN KEY(commentAuthor) REFERENCES account(accountID)
 );

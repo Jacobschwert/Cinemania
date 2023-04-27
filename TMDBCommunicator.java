@@ -7,6 +7,12 @@ import com.google.gson.Gson;
 
 public class TMDBCommunicator {
 
+    // Need a better way of storing the API key that our program will use.
+    // Needs to be hidden from GitHub and the public in general.
+    // For now, I'll just avoid pushing my key, keeping this as an empty string before commits (otherwise, the key will be public in the git history)
+    // Don't push a commit with an actual API_KEY stored here, just use it for testing.
+    private final String API_KEY = "";
+
     public MovieJSON[] getReccomendationListJSON(ContentManager.reccomendationType rType){
         MovieJSON[] movieJson = null;
         switch(rType){

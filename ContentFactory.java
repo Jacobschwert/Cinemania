@@ -22,8 +22,8 @@ public class ContentFactory {
         }
     }
 
-    /* Method that is meant to return a ContentList from strings of JSON containing content information. */
-    public ContentList getContentList(String[] contentJson){
+    /* Method that is meant to return a ContentList by making use of the TMDBCommunicator, based off of a reccomendation type. */
+    public ContentList getContentList(ContentManager.reccomendationType rType){
         
     }
 }

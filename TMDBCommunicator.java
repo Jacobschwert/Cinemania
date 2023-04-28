@@ -31,6 +31,8 @@ public class TMDBCommunicator {
     }
     
     // Get an array of lists containing information about where you can buy a movie to watch. This array corresponds to a list of movies that is passed in.
+    // Example JSON object: https://api.themoviedb.org/3/movie/550/watch/providers?api_key= (Requires an API KEY)
+    // Note that arrays containing watch options, such as the buy array or flatrate array, can be null;
     public static TMDBWatchOptionResultList[] getMovieWatchOptionsArray(TMDBMovieResultList resultList){
         TMDBMovieResult[] results = resultList.getResults();
         TMDBWatchOptionResultList[] returnList = new TMDBWatchOptionResultList[results.length];
@@ -45,6 +47,8 @@ public class TMDBCommunicator {
 
     // TODO: Think about how to handle different HTTP status codes.
     // This code will currently return a MovieResultList of popular action movies sorted in descending order.
+    // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28&with_watch_monetization_types=flatrate
+    // (Requires an API Key)
     private static TMDBMovieResultList getPopularActionMovieResultList(){
         HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28&with_watch_monetization_types=flatrate", API_KEY));
         Gson gson = new Gson();

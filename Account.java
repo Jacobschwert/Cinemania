@@ -6,7 +6,7 @@ public class Account {
     private String userName;
     private String email;
     private String description;
-    private contentManager Cmanage;
+    private ContentManager Cmanage;
     private List<Comment> comments;
     private List<Review> reviews;
 

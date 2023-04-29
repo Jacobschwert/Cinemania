@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ContentFactory {
 
     public enum contentType{
@@ -23,7 +25,28 @@ public class ContentFactory {
     }
 
     /* Method that is meant to return a ContentList by making use of the TMDBCommunicator, based off of a reccomendation type. */
-    public ContentList getContentList(ContentManager.reccomendationType rType){
+    public static ContentList getContentList(ContentManager.reccomendationType rType){
+        switch(rType){
+            case MOVIES_POPULAR:
+                break;
+            case MOVIES_ACTION:
+                TMDBMovieResult[] results = TMDBCommunicator.getReccomendationListMovieResults(rType).getResults();
+                ArrayList<Content> contentList = new ArrayList<Content>(results.length);
+                for(int i = 0; i < results.length; i++){
+                    
+                }
+
+            case MOVIES_ADVENTURE:
+                break;
+            case MOVIES_COMEDY:
+                break;
+            case MOVIES_HORROR:
+                break;
+        }
+    }
+
+    private Content getContentFromTMDBMovieResult(TMDBMovieResult result){
         
     }
+
 }

@@ -9,11 +9,11 @@ public class ContentManager {
 
     // Enums of this type are meant to indicate special behaviour from the generateReccomendationList method.
     public enum reccomendationType {
-        POPULAR,
-        ACTION,
-        ADVENTURE,
-        COMEDY,
-        HORROR,
+        MOVIES_POPULAR,
+        MOVIES_ACTION,
+        MOVIES_ADVENTURE,
+        MOVIES_COMEDY,
+        MOVIES_HORROR,
     }
 
     // How should we indicate whereToWatch and watchStatus for each individual piece of content?
@@ -35,18 +35,7 @@ public class ContentManager {
      * all fall under a shared category. This method will likely also need data from TMDB and may also use some sort of communicator class.
     */
     private ContentList generateReccomendationList(reccomendationType rType){
-        switch(rType){
-            case POPULAR:
-                break;
-            case ACTION:
-                break;
-            case ADVENTURE:
-                break;
-            case COMEDY:
-                break;
-            case HORROR:
-                break;
-        }
+        return ContentFactory.getContentList(rType);
     }
 
     // This method should take generated reccomendation lists and store them in the reccomendationLists variable.

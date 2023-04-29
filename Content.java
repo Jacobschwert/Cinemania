@@ -6,16 +6,18 @@ public abstract class Content {
     private int contentID;
     private String contentName;
     private String contentDescription;
-    private String[] contentGenres;
+    private String[] contentGenreNames;
+    private int[] contentGenreIds;
     private float contentRating;
     private ArrayList<Review> reviewList;
     private String whereToWatch;
 
-    public Content(int contentID, String contentName, String contentDescription, String[] contentGenres, float contentRating, ArrayList<Review> reviewList, String whereToWatch){
+    public Content(int contentID, String contentName, String contentDescription, String[] contentGenreNames, int[] contentGenreIds, float contentRating, ArrayList<Review> reviewList, String whereToWatch){
         this.contentID = contentID;
         this.contentName = contentName;
         this.contentDescription = contentDescription;
-        this.contentGenres = contentGenres;
+        this.contentGenreNames = contentGenreNames;
+        this.contentGenreIds = contentGenreIds;
         this.contentRating = contentRating;
         this.reviewList = reviewList;
         this.whereToWatch = whereToWatch;
@@ -33,8 +35,13 @@ public abstract class Content {
         return contentDescription;
     }
 
-    public String[] getContentGenresCopy(){
-        String[] copy = Arrays.copyOf(contentGenres, contentGenres.length);
+    public String[] getContentGenreNamesCopy(){
+        String[] copy = Arrays.copyOf(contentGenreNames, contentGenreNames.length);
+        return copy;
+    }
+
+    public int[] getContentGenreIdsCopy(){
+        int[] copy = Arrays.copyOf(contentGenreIds, contentGenreIds.length);
         return copy;
     }
 

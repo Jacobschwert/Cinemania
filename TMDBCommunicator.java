@@ -49,13 +49,13 @@ public class TMDBCommunicator {
         return returnList;
     }
 
-    // Method for getting a tv genre name by its TMDB id
+    // Method for getting a movie genre name by its TMDB id
     public static String getMovieGenreByTMDBID(int id){
         if(movieGenres == null) defineMovieGenresHashMap();
         return movieGenres.get(id);
     }
 
-    // Method for getting a movie genre name by its TMDB id
+    // Method for getting a TV genre name by its TMDB id
     public static String getTVGenreByTMDBID(int id){
         if(tvGenres == null) defineTVGenresHashMap();
         return tvGenres.get(id);

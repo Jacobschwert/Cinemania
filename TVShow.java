@@ -5,9 +5,9 @@ public class TVShow extends Content{
     private int episodes;
 
     public TVShow(int contentID, String contentName, String contentDescription, String[] contentGenreNames, 
-                  int[] contentGenreIds, float contentRating, ArrayList<Review> reviewList, String whereToWatch, int seasons, int episodes){
+                  int[] contentGenreIds, Float contentRating, ArrayList<Review> reviewList, String[] buyProviders, String[] rentalProviders, String[] flatrateProviders, int seasons, int episodes){
 
-        super(contentID, contentName, contentDescription, contentGenreNames, contentGenreIds, contentRating, reviewList, whereToWatch);
+        super(contentID, contentName, contentDescription, contentGenreNames, contentGenreIds, contentRating, reviewList, buyProviders, rentalProviders, flatrateProviders);
         this.seasons = seasons;
         this.episodes = episodes;
     }

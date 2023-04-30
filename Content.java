@@ -8,11 +8,13 @@ public abstract class Content {
     private String contentDescription;
     private String[] contentGenreNames;
     private int[] contentGenreIds;
-    private float contentRating;
+    private Float contentRating;
     private ArrayList<Review> reviewList;
-    private String whereToWatch;
+    private String[] buyProviders;
+    private String[] rentalProviders;
+    private String[] flatrateProviders;
 
-    public Content(int contentID, String contentName, String contentDescription, String[] contentGenreNames, int[] contentGenreIds, float contentRating, ArrayList<Review> reviewList, String whereToWatch){
+    public Content(int contentID, String contentName, String contentDescription, String[] contentGenreNames, int[] contentGenreIds, Float contentRating, ArrayList<Review> reviewList, String[] buyProviders, String[] rentalProviders, String[] flatrateProviders){
         this.contentID = contentID;
         this.contentName = contentName;
         this.contentDescription = contentDescription;
@@ -20,7 +22,9 @@ public abstract class Content {
         this.contentGenreIds = contentGenreIds;
         this.contentRating = contentRating;
         this.reviewList = reviewList;
-        this.whereToWatch = whereToWatch;
+        this.buyProviders = buyProviders;
+        this.rentalProviders = rentalProviders;
+        this.flatrateProviders = flatrateProviders;
     }
 
     public int getContentID(){
@@ -55,7 +59,19 @@ public abstract class Content {
         return copy;
     }
 
-    public String getWhereToWatch(){
-        return whereToWatch;
+    public String[] getBuyProvidersCopy(){
+        String[] copy = Arrays.copyOf(buyProviders, buyProviders.length);
+        return copy;
     }
+
+    public String[] getflatrateProvidersCopy(){
+        String[] copy = Arrays.copyOf(flatrateProviders, flatrateProviders.length);
+        return copy;
+    }
+
+    public String[] getRentalProvidersCopy(){
+        String[] copy = Arrays.copyOf(flatrateProviders, rentalProviders.length);
+        return copy;
+    }
+    
 }

@@ -146,17 +146,17 @@ public class TMDBCommunicator {
         }
     }
 
-    // Just using this for testing purposes.
+    //Just using this for testing purposes.
     // public static void main(String args[]){
     //     TMDBMovieResultList movieResults = getPopularActionMovieResultList();
     //     for(int i = 0; i < movieResults.getResults().length; i++){
     //         System.out.println(movieResults.getResults()[i].getTitle());
     //     }
-    //     // Note that not all movies have buy or flatrate options filled out, they can be null.
+    //     // Note that not all movies have buy, rental, or flatrate options filled out, they can be null.
     //     // Will have to keep this in mind
-    //     TMDBWatchOptionResultList[] watchOptions = getMovieWatchOptionsArray(movieResults);
+    //     TMDBWatchOption[] watchOptions = getMovieWatchOptionsArray(movieResults);
     //     for(int i = 0; i < movieResults.getResults().length; i++){
-    //         System.out.println(watchOptions[i].getResults().getUSOptionList().getBuyOptions()[0].getProviderName());
+    //         System.out.println(watchOptions[i].getResult().getUSOptionList().getBuyOptions()[0].getProviderName());
     //     }
     // }
 }

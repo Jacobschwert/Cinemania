@@ -36,7 +36,7 @@ public class ContentManager {
      * It will store it locally in this class, but also, store the content within the Cinemania database.
      */
     public void addToUserContentList(Content contentToAdd, int contentListID){
-
+        
     }
 
     /*The point of this method is to get cached Recommendations or to generate Recommendations to cache and return. 

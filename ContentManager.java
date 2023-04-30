@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 public class ContentManager {
-    private ArrayList<ContentList> reccomendationLists;
+    private ArrayList<ContentList> RecommendationLists;
     private int cmID;
     private Account user;
     private ArrayList<ContentList> contentLists;
     private ArrayList<ContentList> pinnedLists;
 
-    // Enums of this type are meant to indicate special behaviour from the generateReccomendationList method.
-    public enum reccomendationType {
+    // Enums of this type are meant to indicate special behaviour from the generateRecommendationList method.
+    public enum RecommendationType {
         MOVIES_POPULAR,
         MOVIES_ACTION,
         MOVIES_ADVENTURE,
@@ -31,26 +31,21 @@ public class ContentManager {
 
     }
 
-    /* A helper method for the displayReccomendations() method. This method is meant to generate a list of reccomendations that 
-     * all fall under a shared category. This method will likely also need data from TMDB and may also use some sort of communicator class.
-    */
-    private ContentList generateReccomendationList(reccomendationType rType){
-        return ContentFactory.getContentList(rType);
-    }
-
-    // This method should take generated reccomendation lists and store them in the reccomendationLists variable.
-    // This really might not be needed as a method, this might just be handled by the displayReccommendations method.
-    private void cacheReccomendations(){
+    /* The purpose of this method is to add a specific piece of content to a specific user created contentlist.
+     * I imagine it will do this by taking the unique id of the content list.
+     * It will store it locally in this class, but also, store the content within the Cinemania database.
+     */
+    public void addToUserContentList(Content contentToAdd, int contentListID){
 
     }
 
-    /*The point of this method is to get cached reccomendations or to generate reccomendations to cache and return. 
-     * Maybe it would be best to output the different reccomendation list types, allow the user to pick a type, then show the corresponding
+    /*The point of this method is to get cached Recommendations or to generate Recommendations to cache and return. 
+     * Maybe it would be best to output the different Recommendation list types, allow the user to pick a type, then show the corresponding
      * list for the type. Then the user could select content from that specific list to view. This should probably return a COPY of the
-     * reccomendationLists ArrayList rather than the actual list.
+     * RecommendationLists ArrayList rather than the actual list.
     */
-    public ArrayList<ContentList> getReccomendationLists(){
-        return reccomendationLists;
+    public ArrayList<ContentList> getRecommendationLists(){
+        return RecommendationLists;
     }
 
     /* The purpose of this method is to collect a list of accounts based on a search query. I'll need a method of
@@ -78,6 +73,17 @@ public class ContentManager {
         return pinnedLists;
     }
 
+    /* A helper method for the displayRecommendations() method. This method is meant to generate a list of Recommendations that 
+     * all fall under a shared category. This method will likely also need data from TMDB and may also use some sort of communicator class.
+    */
+    private ContentList generateRecommendationList(RecommendationType rType){
+        return ContentFactory.getRecommendedContentList(rType);
+    }
 
+    // This method should take generated Recommendation lists and store them in the RecommendationLists variable.
+    // This really might not be needed as a method, this might just be handled by the displayReccommendations method.
+    private void cacheRecommendations(){
+
+    }
 
 }

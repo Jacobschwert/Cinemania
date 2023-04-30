@@ -18,7 +18,7 @@ public class TMDBCommunicator {
     // Don't push a commit with an actual API_KEY stored here, just use it for testing.
     private static final String API_KEY = "";
 
-    public static TMDBMovieResultList getReccomendationListMovieResults(ContentManager.reccomendationType rType){
+    public static TMDBMovieResultList getRecommendationListMovieResults(ContentManager.RecommendationType rType){
         switch(rType){
             case MOVIES_POPULAR:
                 break;
@@ -36,15 +36,15 @@ public class TMDBCommunicator {
     
     // Get an array of lists containing information about where you can buy a movie to watch. This array corresponds to a list of movies that is passed in.
     // Example JSON object: https://api.themoviedb.org/3/movie/550/watch/providers?api_key= (Requires an API KEY)
-    // Note that arrays containing watch options, such as the buy array or flatrate array, can be null;
-    public static TMDBWatchOptionResultList[] getMovieWatchOptionsArray(TMDBMovieResultList resultList){
+    // Note that arrays containing watch options, such as the buy array or flatrate array, can be null
+    public static TMDBWatchOption[] getMovieWatchOptionsArray(TMDBMovieResultList resultList){
         TMDBMovieResult[] results = resultList.getResults();
-        TMDBWatchOptionResultList[] returnList = new TMDBWatchOptionResultList[results.length];
+        TMDBWatchOption[] returnList = new TMDBWatchOption[results.length];
         Gson gson = new Gson();
         for(int i = 0; i < results.length; i++){
             int movieID = results[i].getId();
             HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/movie/%d/watch/providers?api_key=%s", movieID, API_KEY));
-            returnList[i] = gson.fromJson(getResponse.body(), TMDBWatchOptionResultList.class);
+            returnList[i] = gson.fromJson(getResponse.body(), TMDBWatchOption.class);
         }
         return returnList;
     }
@@ -61,7 +61,26 @@ public class TMDBCommunicator {
         return tvGenres.get(id);
     }
 
+    // Method for getting a movie genre names by their TMDB ids
+    public static String[] getMovieGenresByTMDBID(int[] id){
+        String[] genreNames = new String[id.length];
+        for(int i = 0; i < id.length; i++){
+            genreNames[i] = getMovieGenreByTMDBID(i);
+        }
+        return genreNames;
+    }
+
+    // Method for getting a TV genre names by their TMDB ids
+    public static String[] getTVGenresByTMDBID(int[] id){
+        String[] genreNames = new String[id.length];
+        for(int i = 0; i < id.length; i++){
+            genreNames[i] = getTVGenreByTMDBID(i);
+        }
+        return genreNames;
+    }
+
     // This code will currently return a MovieResultList of popular action movies sorted in descending order.
+    // Now that I have a method of collecting genre ids, I could edit this method to allow you to get popular movies of any genre (Potentially).
     // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
     // (Requires an API Key)
     private static TMDBMovieResultList getPopularActionMovieResultList(){

@@ -1,7 +1,7 @@
 public class TMDBWatchOption {
-    private TMDBWatchOptionResult result;
+    private TMDBWatchOptionResult results;
 
-    public TMDBWatchOptionResult getResult(){
-        return result;
+    public TMDBWatchOptionResult getResults(){
+        return results;
     }
 }

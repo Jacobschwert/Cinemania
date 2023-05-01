@@ -156,7 +156,7 @@ public class TMDBCommunicator {
     //     // Will have to keep this in mind
     //     TMDBWatchOption[] watchOptions = getMovieWatchOptionsArray(movieResults);
     //     for(int i = 0; i < movieResults.getResults().length; i++){
-    //         System.out.println(watchOptions[i].getResult().getUSOptionList().getBuyOptions()[0].getProviderName());
+    //         System.out.println(watchOptions[i].getResults().getUSOptionList().getBuyOptions()[0].getProviderName());
     //     }
     // }
 }

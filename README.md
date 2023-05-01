@@ -23,7 +23,7 @@ In a class that you want to access the database from you need the below variable
 - private String queryString;
     
 Below is an example of inserting values into the account class:
-        > queryString = "INSERT INTO account(accountID, uName, password, email, description) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "');";
+> queryString = "INSERT INTO account(accountID, uName, password, email, description) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "');";
         try{
         query.executeUpdate(queryString);
         } catch(SQLException e){

@@ -30,5 +30,5 @@ queryString = "INSERT INTO account(accountID, uName, password, email, descriptio
             e.printStackTrace();<br>
         }<br>
  
-Other examples can be found in Account.java
+Other examples can be found in Account.java <br>
 Replace "account" with the table you want to use, and the values inside the parenthesis with the variables you want, then follow the same formatting for the vlues as show. Note when you are entering TEXT values that they are surrounded by '' in the query.

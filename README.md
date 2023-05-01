@@ -22,12 +22,12 @@ In a class that you want to access the database from you need the below variable
 - private SqliteQueries query = new SqliteQueries(conn);
 - private String queryString;
     
-Below is an example of inserting values into the account class:
-> queryString = "INSERT INTO account(accountID, uName, password, email, description) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "');";
-        try{
-        query.executeUpdate(queryString);
-        } catch(SQLException e){
-            e.printStackTrace();
-        }
+Below is an example of inserting values into the account class: <br>
+queryString = "INSERT INTO account(accountID, uName, password, email, description) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "');";<br>
+        try{<br>
+        query.executeUpdate(queryString);<br>
+        } catch(SQLException e){<br>
+            e.printStackTrace();<br>
+        }<br>
         
 Replace "account" with the table you want to use, and the values inside the parenthesis with the variables you want, then follow the same formatting for the vlues as show. Note when you are entering TEXT values that they are surrounded by '' in the query.

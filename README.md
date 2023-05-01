@@ -17,12 +17,12 @@ To connect to the SQLite Database you need to download the jar file found the "l
 Currently you will need to create the queries in your own classes and pass that in to either the executeQuery() or executeUpdate(). When you wish to "SELECT" from the database use the executeQuery. When you want to "INSERT", "DELETE" or "UPDATE" you use executeUpdate().
 
 In a class that you want to access the database from you need the below variables: 
-> private SqliteConnector db = new SqliteConnector();
-> private Connection conn = db.connect();
-> private SqliteQueries query = new SqliteQueries(conn);
-> private String queryString;
+- private SqliteConnector db = new SqliteConnector();
+- private Connection conn = db.connect();
+- private SqliteQueries query = new SqliteQueries(conn);
+- private String queryString;
     
-Below is an example of inserting values into the account class:<br>
+Below is an example of inserting values into the account class:
         > queryString = "INSERT INTO account(accountID, uName, password, email, description) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "');";
         try{
         query.executeUpdate(queryString);

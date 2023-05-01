@@ -19,4 +19,9 @@ public class SqliteQueries extends Queries {
         PreparedStatement stmt = conn.prepareStatement(sql);
         return stmt.executeUpdate(); //The int being returned is the number of rows being affected
     }
+
+    // Use this to test out your constructer queries
+    public static void main(String[] args) { 
+        Account test = new Account(7,"ted", "email", "description", "password");
+    }
 }

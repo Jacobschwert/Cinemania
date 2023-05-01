@@ -13,8 +13,6 @@
     private ArrayList<ContentList> contentLists;
     private ArrayList<ContentList> pinnedLists;
 
-    // ************************************************Where my changes begin
-
     // Default constructor, probably needs changes.
     public ContentManager()
     {
@@ -42,8 +40,6 @@
     {
         contentLists.remove(toRemove);
     }
-
-    // ************************************************Where my changes end
 
     // Enums of this type are meant to indicate special behaviour from the generateReccomendationList method.
     public enum RecommendationType {

@@ -1,13 +1,51 @@
-import java.util.ArrayList;
+/*
+ * ContentManager
+ */
 
-public class ContentManager {
-    private ArrayList<ContentList> RecommendationLists;
+ import java.io.*;
+ import java.util.*;
+ import java.net.*;
+
+ public class ContentManager {
+    private ArrayList<ContentList> recommendationLists;
     private int cmID;
     private Account user;
     private ArrayList<ContentList> contentLists;
     private ArrayList<ContentList> pinnedLists;
 
-    // Enums of this type are meant to indicate special behaviour from the generateRecommendationList method.
+    // ************************************************Where my changes begin
+
+    // Default constructor, probably needs changes.
+    public ContentManager()
+    {
+        recommendationLists = new ArrayList<ContentList>();
+        cmID = 1;
+        user = null;
+        contentLists = new ArrayList<ContentList>();
+        pinnedLists = new ArrayList<ContentList>();
+    }
+
+    // Just makes an empty ContentList and adds it to the ArrayList of them.
+    public void createNewContentList()
+    {
+        contentLists.add(new ContentList());
+    }
+
+    // Getter for contentLists.
+    public ArrayList<ContentList> getContentLists()
+    {
+        return this.contentLists;
+    }
+
+    // Deletes a list from contentLists given the list in question.
+    public void deleteList(ContentList toRemove)
+    {
+        contentLists.remove(toRemove);
+    }
+
+    // ************************************************Where my changes end
+
+    // Enums of this type are meant to indicate special behaviour from the generateReccomendationList method.
     public enum RecommendationType {
         MOVIES_POPULAR,
         MOVIES_ACTION,
@@ -36,7 +74,7 @@ public class ContentManager {
      * It will store it locally in this class, but also, store the content within the Cinemania database.
      */
     public void addToUserContentList(Content contentToAdd, int contentListID){
-        
+
     }
 
     /*The point of this method is to get cached Recommendations or to generate Recommendations to cache and return. 
@@ -45,7 +83,7 @@ public class ContentManager {
      * RecommendationLists ArrayList rather than the actual list.
     */
     public ArrayList<ContentList> getRecommendationLists(){
-        return RecommendationLists;
+        return recommendationLists;
     }
 
     /* The purpose of this method is to collect a list of accounts based on a search query. I'll need a method of

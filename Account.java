@@ -1,7 +1,8 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Account {
     private int accountID;
@@ -9,9 +10,9 @@ public class Account {
     private String email;
     private String description;
     private String password;
-    private ContentManager Cmanage;
-    private List<Comment> comments;
-    private List<Review> reviews;
+    private int Cmanage;
+    private int comments;
+    private int reviews;
 
     //This part is required to access and update the database
     private SqliteConnector db = new SqliteConnector();
@@ -19,9 +20,36 @@ public class Account {
     private SqliteQueries query = new SqliteQueries(conn);
     private String queryString;
 
+    public Account(String uName, String password){ //This constructor is used for logging in, the confirmation is done in the controller though
+        queryString = "SELECT * FROM account WHERE uName = '" + uName + "';" ;
+        this.userName = uName;
+        this.password = password;
+        ResultSet rs;
+        try{
+            rs = query.executeQuery(queryString);
+            if (rs.next()) {
+                this.accountID = rs.getInt("accountID");
+                this.email = rs.getString("email");
+                this.description = rs.getString("description");
+                this.Cmanage = rs.getInt("cManager");
+                this.comments = rs.getInt("comments");
+                this.reviews = rs.getInt("reviews");
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     //When I write information to the account, also write it into the DB
-    public Account(int number, String userName, String contact, String description, String password) { //Consider using setter methods here
+    public Account(String userName, String contact, String description, String password) { //Consider using setter methods here
         //Consider creating the random number to be used as the key for Cmanager here
+        Random rand = new Random();
+        Boolean moveOn = false;
+        int number = 0;
+        while (moveOn == false){
+            number = rand.nextInt(8888) + 1111; //This gives a range of 1111 - 9999, which should
+            //Select query for above number, if found do nothing, else assign to accountID and moveOne = true
+        }
         this.accountID = number;
         this.userName = userName;
         this.email = contact;
@@ -40,7 +68,13 @@ public class Account {
         return accountID;
     }
 
-    public void setAccountNumber(int number) { //The primary key is NEVER to be changed, ask Rishi for clarification
+    public void setAccountNumber(int number) { //This should NEVER be called, but I am adding functionality regardless
+        queryString = "UPDATE account SET accountID = '" + number + "' WHERE uName = " + this.userName + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
         this.accountID = number;
     }
 
@@ -86,11 +120,11 @@ public class Account {
         this.description = description;
     }
 
-    public ContentManager getCManage() {
+    public int getCManage() {
         return this.Cmanage;
     }  
     
-    public void setCManage(ContentManager Cmanage) {
+    public void setCManage(int Cmanage) {
         queryString = "UPDATE account SET cManager = " + Cmanage + " WHERE accountID = " + this.accountID + ";";
         try{
             query.executeUpdate(queryString);
@@ -127,6 +161,12 @@ public class Account {
     }
 
     public void recoverAccount(){ //Need to download the gmail jar and create a cinemania email account I think?
-
+        this.password = "1234567890";
+        queryString = "UPDATE account SET password = " + this.password + " WHERE accountID = " + this.accountID + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }

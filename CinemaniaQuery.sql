@@ -46,7 +46,9 @@ CREATE TABLE contentManager (
     user INTEGER,
     contentLists INTEGER,
     pinnedLists INTEGER,
-    whereToWatch TEXT,    
+    buyProviders TEXT,
+    rentProviders TEXT,
+    flatProviders TEXT,
     watchStatus INTEGER,
     reccomendationLists INTEGER
 );

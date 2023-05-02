@@ -1,23 +1,23 @@
 import java.util.Scanner;
 
 public class MainController {
+    LoginController loginController = new LoginController();
+    SearchController searchController = new SearchController();
+    CreationController creationController = new CreationController();
     
     public void listStartupOptions() {
         // Print welcome message
-        System.out.println("                                                                        .         .                                                                                ");
-        System.out.println("        ,o888888o.     8 8888 b.             8 8 8888888888            ,8.       ,8.                   .8.          b.             8  8 8888          .8.          ");
-        System.out.println("       8888     `88.   8 8888 888o.          8 8 8888                 ,888.     ,888.                 .888.         888o.          8  8 8888         .888.         ");
-        System.out.println("    ,8 8888       `8.  8 8888 Y88888o.       8 8 8888                .`8888.   .`8888.               :88888.        Y88888o.       8  8 8888        :88888.        ");
-        System.out.println("    88 8888            8 8888 .`Y888888o.    8 8 8888               ,8.`8888. ,8.`8888.             . `88888.       .`Y888888o.    8  8 8888       . `88888.       ");
-        System.out.println("    88 8888            8 8888 8o. `Y888888o. 8 8 888888888888      ,8'8.`8888,8^8.`8888.           .8. `88888.      8o. `Y888888o. 8  8 8888      .8. `88888.      ");
-        System.out.println("    88 8888            8 8888 8`Y8o. `Y88888o8 8 8888             ,8' `8.`8888' `8.`8888.         .8`8. `88888.     8`Y8o. `Y88888o8  8 8888     .8`8. `88888.     ");
-        System.out.println("    88 8888            8 8888 8   `Y8o. `Y8888 8 8888            ,8'   `8.`88'   `8.`8888.       .8' `8. `88888.    8   `Y8o. `Y8888  8 8888    .8' `8. `88888.    ");
-        System.out.println("    `8 8888       .8'  8 8888 8      `Y8o. `Y8 8 8888           ,8'     `8.`'     `8.`8888.     .8'   `8. `88888.   8      `Y8o. `Y8  8 8888   .8'   `8. `88888.   ");
-        System.out.println("       8888     ,88'   8 8888 8         `Y8o.` 8 8888          ,8'       `8        `8.`8888.   .888888888. `88888.  8         `Y8o.`  8 8888  .888888888. `88888.  ");
-        System.out.println("        `8888888P'     8 8888 8            `Yo 8 888888888888 ,8'         `         `8.`8888. .8'       `8. `88888. 8            `Yo  8 8888 .8'       `8. `88888. ");
         System.out.println("\n\n\n\n\n\n");
-    
-        
+        System.out.println("                 /$$$$$$  /$$                                                       /$$                        ");
+        System.out.println("        /$$/$$  /$$__  $$|__/                                                      |__/            /$$/$$      ");
+        System.out.println("       |  $$$/ | $$  \\__/ /$$ /$$$$$$$   /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$$  /$$  /$$$$$$  |  $$$/     ");
+        System.out.println("       /$$$$$$$| $$      | $$| $$__  $$ /$$__  $$| $$_  $$_  $$ |____  $$| $$__  $$| $$ |____  $$ /$$$$$$$     ");
+        System.out.println("      |__ $$$_/| $$      | $$| $$  \\ $$| $$$$$$$$| $$ \\ $$ \\ $$  /$$$$$$$| $$  \\ $$| $$  /$$$$$$$|__ $$$_/ ");
+        System.out.println("        /$$ $$ | $$    $$| $$| $$  | $$| $$_____/| $$ | $$ | $$ /$$__  $$| $$  | $$| $$ /$$__  $$  /$$ $$      ");
+        System.out.println("       |__/__/ |  $$$$$$/| $$| $$  | $$|  $$$$$$$| $$ | $$ | $$|  $$$$$$$| $$  | $$| $$|  $$$$$$$ |__/__/      ");
+        System.out.println("                \\______/ |__/|__/  |__/ \\_______/|__/ |__/ |__/ \\_______/|__/  |__/|__/ \\_______/          ");                                                                               
+        System.out.println("\n\n\n\n\n\n");                                                                      
+
         // Print options
         System.out.println("\n**************************************");
         System.out.println("*      Please Select a Choice        *");
@@ -46,15 +46,59 @@ public class MainController {
         }
     }
     
-    
+
     private void listAccountOptions() {
-        // Code to list account options
-        System.out.println("Account options: optionA, optionB, optionC");
+        System.out.println("1. Log In");
+        System.out.println("2. Log Out");
+        System.out.println("3: Sign Up");
+        System.out.println("4: Go back");
+        // Get user input
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        
+        // Call appropriate method based on user input
+        if (choice == 1) {
+            loginController.login();
+        } 
+        else if (choice == 2) {
+            loginController.logout();
+        }
+        else if (choice == 3) {
+            loginController.signup();
+        } 
+        else if (choice == 4) {
+            listStartupOptions();
+        }
+        else {
+            System.out.println("Invalid choice.");
+        }
     }
+    
     
     private void listContentOptions() {
-        // Code to list content options
-        System.out.println("Content options: optionX, optionY, optionZ");
+        System.out.println("1. View Reccomendations");
+        System.out.println("2. Search Content");
+        System.out.println("3: Search Users");
+        System.out.println("4: Go back");
+        // Get user input
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        
+        // Call appropriate method based on user input
+        if (choice == 1) {
+            searchController.viewReccomendations();
+        } 
+        else if (choice == 2) {
+            searchController.searchContent();
+        }
+        else if (choice == 3) {
+            searchController.searchUsers();
+        } 
+        else if (choice == 4) {
+            listStartupOptions();
+        }
+        else {
+            System.out.println("Invalid choice.");
+        }
     }
-    
 }

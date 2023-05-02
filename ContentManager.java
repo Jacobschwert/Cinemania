@@ -49,10 +49,10 @@
         MOVIES_COMEDY,
         MOVIES_HORROR,
         TV_POPULAR,
-        TV_ACTION,
-        TV_ADVENTURE,
+        TV_ACTION_ADVENTURE,
+        TV_MYSTERY,
         TV_COMEDY,
-        TV_HORROR,
+        TV_SCIFI_FANTASY,
     }
 
     // How should we indicate whereToWatch and watchStatus for each individual piece of content?
@@ -141,13 +141,13 @@
                 break;
             case TV_POPULAR:
                 break;
-            case TV_ACTION:
+            case TV_ACTION_ADVENTURE:
                 break;
-            case TV_ADVENTURE:
+            case TV_MYSTERY:
                 break;
             case TV_COMEDY:
                 break;
-            case TV_HORROR:
+            case TV_SCIFI_FANTASY:
                 break;
         }
         // return a ContentList

@@ -1,11 +1,5 @@
-import java.util.ArrayList;
 
 public class ContentFactory {
-
-    public enum contentType{
-        TVSHOW,
-        MOVIE,
-    }
 
     // A method for creating a Movie object from TMDB information.
     public static Movie getMovieFromTMDBMovieInfo(TMDBMovieResult result, TMDBWatchOption movieWatchOption){

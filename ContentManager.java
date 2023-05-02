@@ -3,7 +3,7 @@
  */
 
  import java.util.ArrayList;
- 
+
 
  public class ContentManager {
     private ArrayList<ContentList> recommendationLists;
@@ -19,7 +19,7 @@
         this.cmID = cmID;
         this.user = user;
         
-        // Maybe there should be a method for loading stored recommendationList info.
+        // Maybe there should be a method for loading stored recommendationList info (if stored in the databse).
         recommendationLists = new ArrayList<ContentList>();
 
         // Maybe there should be a method for loading stored contentList info.

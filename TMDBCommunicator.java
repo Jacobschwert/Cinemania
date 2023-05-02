@@ -22,15 +22,15 @@ public class TMDBCommunicator {
     public static TMDBMovieResultList getRecommendationListMovieResults(ContentManager.RecommendationType rType){
         switch(rType){
             case MOVIES_POPULAR:
-                break;
+                return getPopularMovieResultList();
             case MOVIES_ACTION:
-                return getPopularActionMovieResultList();
+                return getPopularMovieResultList(28);
             case MOVIES_ADVENTURE:
-                break;
+                return getPopularMovieResultList(12);
             case MOVIES_COMEDY:
-                break;
+                return getPopularMovieResultList(35);
             case MOVIES_HORROR:
-                break;
+                return getPopularMovieResultList(27);
             default:
                 break;
         }
@@ -41,15 +41,15 @@ public class TMDBCommunicator {
     public static TMDBTVResultList getRecommendationListTVResults(ContentManager.RecommendationType rType){
         switch(rType){
             case TV_POPULAR:
-                break;
+                return getPopularTVResultList();
             case TV_ACTION_ADVENTURE:
-                return getPopularActionAdventureTVResultList();
+                return getPopularTVResultList(10759);
             case TV_MYSTERY:
-                break;
+                return getPopularTVResultList(9648);
             case TV_COMEDY:
-                break;
+                return getPopularTVResultList(35);
             case TV_SCIFI_FANTASY:
-                break;
+                return getPopularTVResultList(10765);
             default:
                 break;
         }
@@ -134,19 +134,39 @@ public class TMDBCommunicator {
         return tvResultList;
     }
 
-    // This code will currently return a MovieResultList of popular action movies sorted in descending order.
-    // Now that I have a method of collecting genre ids, I could edit this method to allow you to get popular movies of any genre (Potentially).
-    // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
-    // (Requires an API Key)
-    private static TMDBMovieResultList getPopularActionMovieResultList(){
-        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28", API_KEY));
+
+    private static TMDBMovieResultList getPopularMovieResultList(){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1", API_KEY));
         Gson gson = new Gson();
         TMDBMovieResultList movieResultList = gson.fromJson(getResponse.body(), TMDBMovieResultList.class);
         return movieResultList;
     }
 
-    private static TMDBTVResultList getPopularActionAdventureTVResultList(){
-        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=10759", API_KEY));
+    // This code will currently return a MovieResultList of popular movies in a specific genre, sorted in descending order.
+    // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
+    // (Requires an API Key)
+    private static TMDBMovieResultList getPopularMovieResultList(int genreId){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=%d", API_KEY, genreId));
+        Gson gson = new Gson();
+        TMDBMovieResultList movieResultList = gson.fromJson(getResponse.body(), TMDBMovieResultList.class);
+        return movieResultList;
+    }
+
+    // This code will currently return a TMDBTVResultList of popular TV Shows in general, sorted in descending order.
+    // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
+    // (Requires an API Key)
+    private static TMDBTVResultList getPopularTVResultList(){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en", API_KEY));
+        Gson gson = new Gson();
+        TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
+        return tvResultList;
+    }
+
+    // This code will currently return a TMDBTVResultList of popular TV Shows in a specific genre, sorted in descending order.
+    // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
+    // (Requires an API Key)
+    private static TMDBTVResultList getPopularTVResultList(int genreId){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=%d", API_KEY, genreId));
         Gson gson = new Gson();
         TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
         return tvResultList;

@@ -2,9 +2,8 @@
  * ContentManager
  */
 
- import java.io.*;
- import java.util.*;
- import java.net.*;
+ import java.util.ArrayList;
+ 
 
  public class ContentManager {
     private ArrayList<ContentList> recommendationLists;

@@ -30,9 +30,13 @@ public class TMDBCommunicator {
                 break;
             case MOVIES_HORROR:
                 break;
+            default:
+                break;
         }
         return null;
     }
+
+
     
     // Get an array of lists containing information about where you can buy a movie to watch. This array corresponds to a list of movies that is passed in.
     // Example JSON object: https://api.themoviedb.org/3/movie/550/watch/providers?api_key= (Requires an API KEY)

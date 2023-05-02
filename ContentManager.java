@@ -48,6 +48,11 @@
         MOVIES_ADVENTURE,
         MOVIES_COMEDY,
         MOVIES_HORROR,
+        TV_POPULAR,
+        TV_ACTION,
+        TV_ADVENTURE,
+        TV_COMEDY,
+        TV_HORROR,
     }
 
     // How should we indicate whereToWatch and watchStatus for each individual piece of content?
@@ -111,7 +116,41 @@
      * all fall under a shared category. This method will likely also need data from TMDB and may also use some sort of communicator class.
     */
     private ContentList generateRecommendationList(RecommendationType rType){
-        return ContentFactory.getRecommendedContentList(rType);
+        switch(rType){
+            case MOVIES_POPULAR:
+                break;
+            case MOVIES_ACTION:
+                TMDBMovieResultList resultList = TMDBCommunicator.getRecommendationListMovieResults(rType);
+                TMDBMovieResult[] movieResults = resultList.getResults();
+                TMDBWatchOption[] watchOptions = TMDBCommunicator.getMovieWatchOptionsArray(resultList);
+                ArrayList<Content> contentArrayList = new ArrayList<Content>(movieResults.length);
+                for(int i = 0; i < movieResults.length; i++){
+                    contentArrayList.add(ContentFactory.getMovieFromTMDBMovieInfo(movieResults[i], watchOptions[i]));
+                }
+
+                String contentListName = "Action Movies";
+                String contentListDescription = "Popular Action Movies according to The Movie Database";
+
+                // For contentListID, I'll need a way to generate a unique ID. 
+                
+            case MOVIES_ADVENTURE:
+                break;
+            case MOVIES_COMEDY:
+                break;
+            case MOVIES_HORROR:
+                break;
+            case TV_POPULAR:
+                break;
+            case TV_ACTION:
+                break;
+            case TV_ADVENTURE:
+                break;
+            case TV_COMEDY:
+                break;
+            case TV_HORROR:
+                break;
+        }
+        // return a ContentList
     }
 
     // This method should take generated Recommendation lists and store them in the RecommendationLists variable.

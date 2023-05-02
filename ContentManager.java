@@ -74,7 +74,12 @@
      * I'll need some way to ping The Movie Database (TMDB) to fuffill the query, might make some sort of TMBD communicator class or something for this.
      */
     public ArrayList<Content> contentSearch(String searchQuery){
-
+        ArrayList<Content> movieList = generateMovieContentArrayList(searchQuery);
+        ArrayList<Content> tvList = generateTVContentArrayList(searchQuery);
+        ArrayList<Content> returnList = new ArrayList<Content>(movieList.size() + tvList.size());
+        returnList.addAll(movieList);
+        returnList.addAll(tvList);
+        return returnList;
     }
 
     /* The purpose of this method is to add a specific piece of content to a specific user created contentlist.
@@ -200,6 +205,18 @@
         // return a ContentList
     }
 
+    // Helper method for generating and composing a list of movie objects into an ArrayList of Content objects relating to a search query.
+    private ArrayList<Content> generateMovieContentArrayList(String searchQuery){
+                TMDBMovieResultList resultList = TMDBCommunicator.getContentSearchMovieResultList(searchQuery);
+                TMDBMovieResult[] movieResults = resultList.getResults();
+                TMDBWatchOption[] watchOptions = TMDBCommunicator.getMovieWatchOptionsArray(resultList);
+                ArrayList<Content> contentArrayList = new ArrayList<Content>(movieResults.length);
+                for(int i = 0; i < movieResults.length; i++){
+                    contentArrayList.add(ContentFactory.getMovieFromTMDBMovieInfo(movieResults[i], watchOptions[i]));
+                }
+                return contentArrayList;
+    }
+
     // Helper method for generating and composing a list of movie recommendations into an ArrayList of Content objects.
     private ArrayList<Content> generateMovieContentArrayList(RecommendationType rType){
                 TMDBMovieResultList resultList = TMDBCommunicator.getRecommendationListMovieResults(rType);
@@ -211,6 +228,18 @@
                 }
                 return contentArrayList;
     }
+
+    // Helper method for generating and composing a list of tv objects into an ArrayList of Content objects relating to a search query.
+    private ArrayList<Content> generateTVContentArrayList(String searchQuery){
+        TMDBTVResultList resultList = TMDBCommunicator.getContentSearchTVResultList(searchQuery);
+        TMDBTVResult[] tvResults = resultList.getResults();
+        TMDBWatchOption[] watchOptions = TMDBCommunicator.getTVWatchOptionsArray(resultList);
+        ArrayList<Content> contentArrayList = new ArrayList<Content>(tvResults.length);
+        for(int i = 0; i < tvResults.length; i++){
+            contentArrayList.add(ContentFactory.getTVShowFromTMDBTVInfo(tvResults[i], watchOptions[i]));
+        }
+        return contentArrayList;
+}
 
     // Helper method for generating and composing a list of TV Show recommendations into an ArrayList of Content objects.
     private ArrayList<Content> generateTVContentArrayList(RecommendationType rType){

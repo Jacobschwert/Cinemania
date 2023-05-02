@@ -116,6 +116,24 @@ public class TMDBCommunicator {
         return genreNames;
     }
 
+    // This method will parse JSON gathered from TMDB with the help of the GSON library. 
+    // It gathers JSON information about movies based on a search query.
+    public static TMDBMovieResultList getContentSearchMovieResultList(String searchQuery){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&language=en-US&query=%s&include_adult=false", API_KEY, searchQuery));
+        Gson gson = new Gson();
+        TMDBMovieResultList movieResultList = gson.fromJson(getResponse.body(), TMDBMovieResultList.class);
+        return movieResultList;
+    }
+
+    // This method will parse JSON gathered from TMDB with the help of the GSON library. 
+    // It gathers JSON information about tv shows based on a search query.
+    public static TMDBTVResultList getContentSearchTVResultList(String searchQuery){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/search/tv?api_key=%s&language=en-US&query=%s&include_adult=false", API_KEY, searchQuery));
+        Gson gson = new Gson();
+        TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
+        return tvResultList;
+    }
+
     // This code will currently return a MovieResultList of popular action movies sorted in descending order.
     // Now that I have a method of collecting genre ids, I could edit this method to allow you to get popular movies of any genre (Potentially).
     // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28

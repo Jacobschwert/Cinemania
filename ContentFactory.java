@@ -28,6 +28,26 @@ public class ContentFactory {
 
     }
 
+    // A method for creating a TVShow object from TMDB information.
+    public static TVShow getTVShowFromTMDBTVInfo(TMDBTVResult result, TMDBWatchOption tvWatchOption){
+        int contentID = result.getId();
+        String contentName = result.getName();
+        String contentDescription = result.getOverview();
+        int[] contentGenreIds = result.getGenreIds();
+        String[] genreNames = TMDBCommunicator.getTVGenresByTMDBID(contentGenreIds);
+
+        TMDBCountryWatchOptionList usList = tvWatchOption.getResults().getUSOptionList();
+        String[] buyProviders = getProviderNamesFromProviderInfoArray(usList.getBuyOptions());
+        String[] rentalProviders = getProviderNamesFromProviderInfoArray(usList.getRentOptions());
+        String[] flatrateProviders = getProviderNamesFromProviderInfoArray(usList.getFlatrateOptions());
+
+        // For a review list, I'll need to ping the Feedback factory, which will then look through the cinemania database use information stored there
+        // to bring back a list of review objects representing reviews written from that piece of content. If there are no reviews,
+        // then I'll have the review list be either null or empty.
+
+        // To get the content rating, I can just go over the list of the reviews and take the average rating.  
+    }
+
     private static String[] getProviderNamesFromProviderInfoArray(TMDBWatchOptionProviderInfo[] providerInfos){
         String[] returnStrings = new String[providerInfos.length];
         for(int i = 0; i < providerInfos.length; i++){

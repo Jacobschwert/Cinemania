@@ -64,7 +64,7 @@ public abstract class Content {
         return copy;
     }
 
-    public String[] getflatrateProvidersCopy(){
+    public String[] getFlatrateProvidersCopy(){
         String[] copy = Arrays.copyOf(flatrateProviders, flatrateProviders.length);
         return copy;
     }

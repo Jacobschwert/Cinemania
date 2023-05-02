@@ -18,6 +18,7 @@ public class TMDBCommunicator {
     // Don't push a commit with an actual API_KEY stored here, just use it for testing.
     private static final String API_KEY = "";
 
+    // A method for getting TMDB movie info that matches with a recommendation type.
     public static TMDBMovieResultList getRecommendationListMovieResults(ContentManager.RecommendationType rType){
         switch(rType){
             case MOVIES_POPULAR:
@@ -36,13 +37,45 @@ public class TMDBCommunicator {
         return null;
     }
 
-
+    // A method for getting TMDB tv info that matches with a recommendation type.
+    public static TMDBTVResultList getRecommendationListTVResults(ContentManager.RecommendationType rType){
+        switch(rType){
+            case TV_POPULAR:
+                break;
+            case TV_ACTION_ADVENTURE:
+                return getPopularActionAdventureTVResultList();
+            case TV_MYSTERY:
+                break;
+            case TV_COMEDY:
+                break;
+            case TV_SCIFI_FANTASY:
+                break;
+            default:
+                break;
+        }
+        return null;
+    }
     
     // Get an array of lists containing information about where you can buy a movie to watch. This array corresponds to a list of movies that is passed in.
     // Example JSON object: https://api.themoviedb.org/3/movie/550/watch/providers?api_key= (Requires an API KEY)
     // Note that arrays containing watch options, such as the buy array or flatrate array, can be null
     public static TMDBWatchOption[] getMovieWatchOptionsArray(TMDBMovieResultList resultList){
         TMDBMovieResult[] results = resultList.getResults();
+        TMDBWatchOption[] returnList = new TMDBWatchOption[results.length];
+        Gson gson = new Gson();
+        for(int i = 0; i < results.length; i++){
+            int movieID = results[i].getId();
+            HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/movie/%d/watch/providers?api_key=%s", movieID, API_KEY));
+            returnList[i] = gson.fromJson(getResponse.body(), TMDBWatchOption.class);
+        }
+        return returnList;
+    }
+
+    // Get an array of lists containing information about where you can buy a movie to watch. This array corresponds to a list of movies that is passed in.
+    // Example JSON object: https://api.themoviedb.org/3/movie/550/watch/providers?api_key= (Requires an API KEY)
+    // Note that arrays containing watch options, such as the buy array or flatrate array, can be null.
+    public static TMDBWatchOption[] getTVWatchOptionsArray(TMDBTVResultList resultList){
+        TMDBTVResult[] results = resultList.getResults();
         TMDBWatchOption[] returnList = new TMDBWatchOption[results.length];
         Gson gson = new Gson();
         for(int i = 0; i < results.length; i++){
@@ -92,6 +125,13 @@ public class TMDBCommunicator {
         Gson gson = new Gson();
         TMDBMovieResultList movieResultList = gson.fromJson(getResponse.body(), TMDBMovieResultList.class);
         return movieResultList;
+    }
+
+    private static TMDBTVResultList getPopularActionAdventureTVResultList(){
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=10759", API_KEY));
+        Gson gson = new Gson();
+        TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
+        return tvResultList;
     }
 
     // Returns a TMDB Genre list that contains all types of movie genres and their ids.

@@ -20,8 +20,9 @@ public class SqliteConnector implements Connector {
         }
         return conn;
     }
-
-    public static void main(String[] args) {
+    
+    // Used to test connection
+    public static void main(String[] args) { 
         SqliteConnector connector = new SqliteConnector();
         Connection conn = connector.connect();
         try {

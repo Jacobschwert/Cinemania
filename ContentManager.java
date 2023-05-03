@@ -33,6 +33,7 @@ import java.util.Collections;
     // Just makes an empty ContentList and adds it to the ArrayList of them.
     public void createNewContentList()
     {
+        //Needs to be assigned a unique id;
         contentLists.add(new ContentList());
     }
 
@@ -45,6 +46,7 @@ import java.util.Collections;
     // Deletes a list from contentLists given the list in question.
     public void deleteList(ContentList toRemove)
     {
+        // Needs to be removed from the database as well.
         contentLists.remove(toRemove);
     }
 

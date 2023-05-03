@@ -1,8 +1,6 @@
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class FeedbackFactory {
-    private ArrayList<Feedback> feedbackList;
     
     public Comment createComment(String text, Review reviewTarget) throws IllegalArgumentException {
         Comment comment = null;
@@ -23,8 +21,12 @@ public class FeedbackFactory {
         }
         return review;
     }
-    
-    public ArrayList<Feedback> getFeedbackList() {
-        return feedbackList;
+
+    public Comment getComment() {
+        return this.getComment();
+    }
+
+    public Review getReview() {
+        return this.getReview();
     }
 }

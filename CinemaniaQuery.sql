@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS contentList;
-DROP TABLE IF EXISTS content;
+DROP TABLE IF EXISTS movie;
+DROP TABLE IF EXISTS tvShow;
 DROP TABLE IF EXISTS contentManager;
-DROP TABLE IF EXISTS feedback;
 DROP TABLE IF EXISTS watchStatus;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS review;
@@ -13,13 +13,11 @@ CREATE TABLE account (
     uName TEXT,
     password TEXT,
     description TEXT,
-    Email TEXT NOT NULL,
+    Email TEXT,
     cManager INTEGER,
     comments TEXT,
     reviews TEXT,
-    FOREIGN KEY(cManager) REFERENCES contentManager(cmID), 
-    FOREIGN KEY(comments) REFERENCES feedback(feedbackID),
-    FOREIGN KEY(reviews) REFERENCES feedback(feedbackID)
+    FOREIGN KEY(cManager) REFERENCES contentManager(cmID)
 );
 
 CREATE TABLE contentList (
@@ -31,40 +29,40 @@ CREATE TABLE contentList (
     FOREIGN KEY(authorID) REFERENCES account(accountID)
 );
 
-CREATE TABLE content (
+CREATE TABLE movie (
+    contentID INTEGER PRIMARY KEY,
+    contentName TEXT,
+    contentDescription TEXT,
+    contentGenres TEXT,
+    contentRating REAL,
+    reviews TEXT
+);
+
+CREATE TABLE tvShow (
     contentID INTEGER PRIMARY KEY,
     contentName TEXT,
     contentDescription TEXT,
     contentGenres TEXT,
     contentRating REAL,
     reviews TEXT,
-    FOREIGN KEY(reviews) REFERENCES feedback(feedbackID)
+    seasons INTEGER,
+    episodes INTEGER
 );
 
 CREATE TABLE contentManager (
     cmID INTEGER PRIMARY KEY,
     user INTEGER,
-    contentLists INTEGER,
-    pinnedLists INTEGER,
+    contentLists TEXT,
+    pinnedLists TEXT,
     buyProviders TEXT,
     rentProviders TEXT,
-    flatProviders TEXT,
-    watchStatus INTEGER,
-    reccomendationLists INTEGER
+    flatProviders TEXT
 );
-
--- CREATE TABLE feedback (
---     feedbackID INTEGER PRIMARY KEY,
---     feedbackContent TEXT,
---     likes INTEGER,
---     feedbackAuthor INTEGER,
---     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
--- );
 
 CREATE TABLE watchStatus (
     uID INTEGER,
     cID INTEGER,
-    status TEXT,
+    status INTEGER,
     FOREIGN KEY(uID) REFERENCES account(accountID),
     FOREIGN KEY(cID) REFERENCES content(contentID)
 );
@@ -74,6 +72,7 @@ CREATE TABLE review (
     feedbackContent TEXT,
     likes INTEGER,
     feedbackAuthor INTEGER,
+    comments TEXT,
     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 );
 
@@ -84,5 +83,3 @@ CREATE TABLE comment (
     feedbackAuthor INTEGER,
     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 );
-
--- SELECT * FROM account;

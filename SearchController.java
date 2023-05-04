@@ -28,7 +28,6 @@ public class SearchController {
                 }
                 try {
                     choice = Integer.parseInt(userInput);
-                    recommendationLists.get(choice);
                 } 
                 catch (NumberFormatException e) {
                     System.out.println("Invalid Input, please enter a number matching a recommendation list index, or, type 'back' to go back.");
@@ -49,7 +48,6 @@ public class SearchController {
                 }
                 try {
                     choice = Integer.parseInt(userInput);
-                    recommendationLists.get(choice);
                 } 
                 catch (NumberFormatException e) {
                     System.out.println("Invalid Input, please enter a number matching a content index, or, type 'back' to go back.");
@@ -57,13 +55,13 @@ public class SearchController {
             }
 
             // Loop for selecting a specific content option
-            // User should be able to: Create a Review and view reviews.
+            // User should be able to: Create a Review, view reviews, and get access to watch status choices for a piece of content.
             // User should also be able to add content to content lists, but I'm guessing this will be implemented first
-            // when the user is viewing their own content lists.
+            // when the user is viewing their own content lists. (We could also give the user an option here to view their content lists here, then select one to add to)
             Content selectedContent = listContent.get(choice);
             choice = 0;
             int numberOfChoices = 2;
-            selectedContent.toString();
+            selectedContent.toString(); // toString method will display necesarry information about the selected piece of content.
             System.out.println("Two available options: 1. Create Review or 2. View User Reviews. Please type in a number corresponding to an option index, or type 'back' to go back");
             if(isEmpty) break;
             while(choice < 1 || choice > numberOfChoices){
@@ -73,7 +71,6 @@ public class SearchController {
                 }
                 try {
                     choice = Integer.parseInt(userInput);
-                    recommendationLists.get(choice);
                 } 
                 catch (NumberFormatException e) {
                     System.out.println("Invalid Input, please enter a number matching an option index, or, type 'back' to go back.");
@@ -85,7 +82,11 @@ public class SearchController {
                     creationController.createReview();
                     break;
                 case 2:
-                    //Display reviews here, then, allow the user to create a comment, probably with he help of the createComment() method
+                    // Display reviews here, then, allow the user to pick a review
+                    // Allow the user to like the review, unlike the review, create a comment, or view comments.
+                    // If the user chooses to view comments, display the comments (numbering each comment),
+                    // Allow the user to pick a comment, allow the user to like the comment or unlike the comment.
+                    // Maybe it would be best if we gave reviews and comments their own toString methods and used those to help out with this part?
                     break;
             }
 
@@ -94,10 +95,42 @@ public class SearchController {
 
     public void searchUsers() {
         System.out.println("Searching Users");
+        
     }
 
-    public void searchContent() {
+
+    // I should probably change this so that the method gathers the search query on its own.
+    public void searchContent(String searchQuery, ContentManager contentManager) {
         System.out.println("Searching Content");
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Content> gatheredContent = contentManager.contentSearch(searchQuery);
+        if(gatheredContent.size() < 1){
+            System.out.println("No content was found for your query.");
+            return;
+        }
+
+        boolean searchingContent = true;
+        while(searchingContent){
+            int choice = 0;
+            // Loop for selecting a specific piece of content in an ArrayList of Content
+            System.out.println("Enter a number matching a piece of content, or, type 'back' to go back to the main menu.");
+            displayContentSearchSummaries(gatheredContent);
+            while(choice < 1 || choice > gatheredContent.size()){
+                String userInput = scanner.nextLine().trim();
+                if(userInput.equalsIgnoreCase("back")){
+                    searchingContent = false;
+                    break;
+                }
+                try {
+                    choice = Integer.parseInt(userInput);
+                } 
+                catch (NumberFormatException e) {
+                    System.out.println("Invalid Input, please enter a number matching a content index, or, type 'back' to go back.");
+                }
+            }
+            // To be continued
+        }
+
     }
 
     public void viewPinnedLists(){
@@ -110,6 +143,22 @@ public class SearchController {
             ContentList rList = recommendationLists.get(i - 1);
             System.out.println(i + ". " + rList.getContentListName() + " - " + rList.getContentListDescription());
         }
+    }
+
+    // Display a generic overview of each piece of content in an ArrayList of content.
+    private void displayContentSearchSummaries(ArrayList<Content> gatheredContent){
+        for(int i = 1; i < gatheredContent.size() + 1; i++){
+            Content content = gatheredContent.get(i - 1);
+            System.out.println(i + ". " + content.getContentName() + " - " + content.getContentDescription());
+        }
+    }
+
+    // Display the reviews related to a specific piece of content.
+    // Meant to allow the user to view reviews ona piece of content.
+    // These reviews should probably be numbered, so that the user can
+    // select a review to like, comment, or unlike.
+    private void displayContentReviews(Content content){
+
     }
 
     // for testing

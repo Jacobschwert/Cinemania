@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     public Account logout() {
-        System.out.println("Logout");
+        System.out.println("You have logged out.");
         return null;
     }
 

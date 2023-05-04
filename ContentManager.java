@@ -2,8 +2,11 @@
  * ContentManager
  */
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
  public class ContentManager {
@@ -12,6 +15,10 @@ import java.util.Collections;
     private Account user;
     private ArrayList<ContentList> contentLists;
     private ArrayList<ContentList> pinnedLists;
+    private SqliteConnector db = new SqliteConnector();
+    private Connection conn = db.connect();
+    private SqliteQueries query = new SqliteQueries(conn);
+    private String queryString;
 
     // Default constructor, probably needs changes.
     public ContentManager(int cmID, Account user)
@@ -259,6 +266,41 @@ import java.util.Collections;
     // This really might not be needed as a method, this might just be handled by the displayReccommendations method.
     private void cacheRecommendations(){
 
+    }
+
+    //The addWatchStatus() changeWatchStatus() and getWatchStatus() methods all encapsulate Use Case Edit Watch Status
+    public void addWatchStatus(int num, int cID){ //These potentially need to be changed to account for movie/tv show
+        int uID = this.user.getAccountNumber();
+        queryString = "INSERT INTO watchStatus(uID, cID, status) VALUES(" + uID + ", " + cID + ", " + num + ");";
+        try{
+        query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void changeWatchStatus(int num, int cID){
+        int uID = this.user.getAccountNumber();
+        queryString = "UPDATE watchStatus Set status = " + num + " WHERE uID = " + uID +" AND cID = " + cID + ";";
+        try{
+        query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public int getWatchStatus(int cID){
+        int uID = this.user.getAccountNumber();
+        queryString = "SELECT status FROM watchStatus WHERE uID = " + uID +" AND cID = " + cID + ";";
+        int result = 0;
+        ResultSet rs;
+        try{
+            rs = query.executeQuery(queryString);
+            if (rs.next()) {
+                result = rs.getInt("status");
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

@@ -3,6 +3,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
+
 
 public class Account {
     private int accountID;
@@ -11,8 +15,8 @@ public class Account {
     private String description;
     private String password;
     private int Cmanage;
-    private int comments;
-    private int reviews;
+    private String comments;
+    private String reviews;
 
     //This part is required to access and update the database
     private SqliteConnector db = new SqliteConnector();
@@ -21,7 +25,7 @@ public class Account {
     private String queryString;
 
     public Account(String uName, String password){ //This constructor is used for logging in, the confirmation is done in the controller though
-        queryString = "SELECT * FROM account WHERE uName = '" + uName + "';" ;
+        queryString = "SELECT * FROM account WHERE uName = '" + uName + "' AND password = '" + password + "';" ;
         this.userName = uName;
         this.password = password;
         ResultSet rs;
@@ -32,25 +36,49 @@ public class Account {
                 this.email = rs.getString("email");
                 this.description = rs.getString("description");
                 this.Cmanage = rs.getInt("cManager");
-                this.comments = rs.getInt("comments");
-                this.reviews = rs.getInt("reviews");
+                this.comments = rs.getString("comments");
+                this.reviews = rs.getString("reviews");
             }
         } catch(SQLException e){
             e.printStackTrace();
         }
     }
 
-    //When I write information to the account, also write it into the DB
-    public Account(String userName, String contact, String description, String password) { //Consider using setter methods here
-        //Consider creating the random number to be used as the key for Cmanager here
+    //Use case Create Account
+    public Account(String userName, String contact, String description, String password) {
         Random rand = new Random();
         Boolean moveOn = false;
         int number = 0;
-        while (moveOn == false){
-            number = rand.nextInt(8888) + 1111; //This gives a range of 1111 - 9999, which should
-            //Select query for above number, if found do nothing, else assign to accountID and moveOne = true
+        while (moveOn == false){ //Generate accountID
+            number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
+            queryString = "SELECT accountID FROM account WHERE accountID = " + number + ";" ;
+            ResultSet rs;
+            try{
+                rs = query.executeQuery(queryString);
+                if (!rs.next()) {
+                    this.accountID = number;
+                    moveOn = true;
+                }
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
         }
-        this.accountID = number;
+        moveOn = false;
+        int number2 = 0;
+        while (moveOn == false){ //Generate cmID
+            number2 = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
+            queryString = "SELECT cmID FROM contentManager WHERE cmID = " + number2 + ";" ;
+            ResultSet rs;
+            try{
+                rs = query.executeQuery(queryString);
+                if (!rs.next()) {
+                    setCManage(number2);;
+                    moveOn = true;
+                }
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
         this.userName = userName;
         this.email = contact;
         this.description = description;
@@ -107,7 +135,7 @@ public class Account {
     }
 
     public String getDescription() {
-        return userName;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -134,6 +162,36 @@ public class Account {
         this.Cmanage = Cmanage;
     }
 
+    public String getReviews() { //The idea for this and Comments is that it will be a continuous string hold the id of every comment associated with this account
+        return this.reviews;
+    }
+
+    public void setReviews(String reviews) {
+        queryString = "UPDATE account SET reviews = '" + reviews + "' WHERE accountID = " + this.accountID + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        this.reviews = reviews;
+    }
+
+    public String getComments() {
+        return this.comments;
+    }
+
+    public void setComments(String comments) {
+        queryString = "UPDATE account SET comments = '" + comments + "' WHERE accountID = " + this.accountID + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        this.comments = comments;
+    }
+
+
+    //Use case Edit Account
     public void editAccount(String userName, String contact, String description, Boolean delete) { //In controller, just pass account.getUName() when not changing
         setEmail(contact);
         setUName(userName);
@@ -151,6 +209,8 @@ public class Account {
         }
     }
 
+
+    //Use case Delete Account
     private void deleteAccount(){
         queryString = "DELETE FROM account WHERE accountID = " + this.accountID + ";";
         try{
@@ -160,12 +220,43 @@ public class Account {
         }
     }
 
-    public void recoverAccount(){ //Need to download the gmail jar and create a cinemania email account I think?
-        this.password = "1234567890";
+
+    //Use case Recover Account
+    public void recoverAccount(){ //Will test later, concept SHOULD work though
+        Random rand = new Random();
+        this.password = Integer.toString(rand.nextInt(88888) + 11111);
         queryString = "UPDATE account SET password = " + this.password + " WHERE accountID = " + this.accountID + ";";
         try{
             query.executeUpdate(queryString);
         } catch(SQLException e){
+            e.printStackTrace();
+        }
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        // Create the session
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("cinemaniarecover@gmail.com", "eafmwtcaiqhdwwdb");            
+            }
+        });
+
+        // Create the email message
+        try{
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("cinemaniarecover@gmail.com"));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(this.email));
+        message.setSubject("Password Recovery");
+        message.setText("Dear User, \n\nYour password has now been changed to: " + this.password + ". Please either remember this one, or change it when you sign in.");
+
+        // Send the email
+        Transport.send(message);
+
+        System.out.println("Email sent successfully.");
+        } catch(Exception e){
             e.printStackTrace();
         }
     }

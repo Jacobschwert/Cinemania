@@ -27,8 +27,6 @@ public class ContentList
      */
     public ContentList()
     {
-        // **********************************************************************
-        // Will need a way to assign a unique ID, likely through Content Manager.
         this.contentListID = 0;
         this.numContents = 0;
         this.contentListName = "New List";
@@ -123,7 +121,6 @@ public class ContentList
      */
     public void setContentListID(int contentListID)
     {
-        // **************Inclusion of this is questionable.
         this.contentListID = contentListID;
     }
 

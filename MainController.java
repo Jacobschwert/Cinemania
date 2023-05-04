@@ -55,27 +55,37 @@ public class MainController {
         // Get user input
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-        
+        Boolean flag = false;
         // Call appropriate method based on user input
         Account user;
         ContentManager cm;
-        if (choice == 1) {
-            user = loginController.login();
-            cm = new ContentManager(user.getCManage(), user);
-        } 
-        else if (choice == 2) {
-            user = loginController.logout();
-            cm = null;
-        }
-        else if (choice == 3) {
-            user = loginController.signup();
-            cm = new ContentManager(user.getCManage(), user);
-        } 
-        else if (choice == 4) {
-            listStartupOptions();
-        }
-        else {
-            System.out.println("Invalid choice.");
+        while(!flag){
+            if (choice == 1) {
+                user = loginController.login();
+                if(user == null)
+                    System.out.println("Invalid Username and/or Password.");
+                else{
+                    cm = new ContentManager(user.getCManage(), user);
+                    flag = true;
+                }
+            } 
+            else if (choice == 2) {
+                user = loginController.logout();
+                cm = null;
+                flag = true;
+            }
+            else if (choice == 3) {
+                user = loginController.signup();
+                cm = new ContentManager(user.getCManage(), user);
+                flag = true;
+            } 
+            else if (choice == 4) {
+                flag = true;
+                listStartupOptions();
+            }
+            else {
+                System.out.println("Invalid choice.");
+            }
         }
     }
     

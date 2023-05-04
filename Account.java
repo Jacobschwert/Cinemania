@@ -72,7 +72,7 @@ public class Account {
             try{
                 rs = query.executeQuery(queryString);
                 if (!rs.next()) {
-                    setCManage(number2);;
+                    this.Cmanage = number2;
                     moveOn = true;
                 }
             } catch(SQLException e){
@@ -84,7 +84,7 @@ public class Account {
         this.description = description;
         this.password = password;
         String numberStr = String.valueOf(number);
-        queryString = "INSERT INTO account(accountID, uName, password, email, description) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "');";
+        queryString = "INSERT INTO account(accountID, uName, password, email, description, cManager) VALUES(" + numberStr + ", '" + userName + "', '" + password + "', '" + email + "', '" + description + "', " + Cmanage + ");";
         try{
         query.executeUpdate(queryString);
         } catch(SQLException e){
@@ -259,5 +259,12 @@ public class Account {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    //Below is account creation tester for both constructors
+    public static void main(String args[]){
+        // Account test = new Account("ted", "email", "description", "password");
+        // Account test2 = new Account("ted","password");
+        // System.out.println(test2.getAccountNumber());
     }
 }

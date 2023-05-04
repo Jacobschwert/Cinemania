@@ -13,7 +13,7 @@ CREATE TABLE account (
     uName TEXT,
     password TEXT,
     description TEXT,
-    Email TEXT,
+    email TEXT,
     cManager INTEGER,
     comments TEXT,
     reviews TEXT,
@@ -83,3 +83,5 @@ CREATE TABLE comment (
     feedbackAuthor INTEGER,
     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 );
+
+--SELECT accountID FROM account WHERE accountID = 7;

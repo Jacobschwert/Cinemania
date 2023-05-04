@@ -1,37 +1,32 @@
-import java.util.ArrayList;
+import java.sql.SQLException;
 
 public class FeedbackFactory {
-    private int feedbackID;
-    private ArrayList<Feedback> feedbackList;
     
-    public FeedbackFactory() {
-        this.feedbackID = 0;
-        this.feedbackList = new ArrayList<Feedback>();
-    }
-    
-    public Comment createComment() {
-        Comment comment = new Comment();
-        comment.createComment();
-        comment.setFeedbackID(feedbackID);
-        feedbackID++;
-        feedbackList.add(comment);
+    public Comment createComment(String text, Review reviewTarget) throws IllegalArgumentException {
+        Comment comment = null;
+        try {
+            comment = new Comment(text, reviewTarget);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
         return comment;
     }
     
-    public Review createReview(String summary, int rating) {
+    public Review createReview(String summary, int rating) throws SQLException {
         Review review = null;
         try {
             review = new Review(summary, rating);
-            review.setFeedbackID(feedbackID);
-            feedbackID++;
-            feedbackList.add(review);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
         return review;
     }
-    
-    public ArrayList<Feedback> getFeedbackList() {
-        return feedbackList;
+
+    public Comment getComment() {
+        return this.getComment();
+    }
+
+    public Review getReview() {
+        return this.getReview();
     }
 }

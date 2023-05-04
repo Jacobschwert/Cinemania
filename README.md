@@ -36,19 +36,19 @@ Replace "account" with the table you want to use, and the values inside the pare
 
 # Generate ID
 Below is example of generating and ID, changes would need to be made to fit your requirements, but follow the general flow of this. <br>
-Boolean moveOn = false;
-        int number = 0;
-        while (moveOn == false){ //Generate accountID
-            number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
-            queryString = "SELECT accountID FROM account WHERE accountID = " + number + ";" ;
-            ResultSet rs;
-            try{
-                rs = query.executeQuery(queryString);
-                if (!rs.next()) {
-                    this.accountID = number;
-                    moveOn = true;
-                }
-            } catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
+Boolean moveOn = false;<br>
+        int number = 0;<br>
+        while (moveOn == false){ //Generate accountID<br>
+            number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999<br>
+            queryString = "SELECT accountID FROM account WHERE accountID = " + number + ";" ;<br>
+            ResultSet rs;<br>
+            try{<br>
+                rs = query.executeQuery(queryString);<br>
+                if (!rs.next()) {<br>
+                    this.accountID = number;<br>
+                    moveOn = true;<br>
+                }<br>
+            } catch(SQLException e){<br>
+                e.printStackTrace();<br>
+            }<br>
+        }<br>

@@ -123,7 +123,7 @@ import java.sql.SQLException;
         }
         ArrayList<ContentList> copy = new ArrayList<>(contentLists.size());
         Collections.copy(copy, recommendationLists);
-        return recommendationLists;
+        return copy;
     }
 
     /* The purpose of this method is to collect a list of accounts based on a search query. I'll need a method of

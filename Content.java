@@ -49,7 +49,7 @@ public abstract class Content {
         return copy;
     }
 
-    public float getContentRating(){
+    public Float getContentRating(){
         return contentRating;
     }
 
@@ -72,6 +72,48 @@ public abstract class Content {
     public String[] getRentalProvidersCopy(){
         String[] copy = Arrays.copyOf(flatrateProviders, rentalProviders.length);
         return copy;
+    }
+
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getContentName()).append(" - ").append(getContentDescription()).append("\n");
+        if(getContentRating() != null) stringBuilder.append("Content Rating: ").append(getContentRating()).append("\n");
+        if(contentGenreNames != null){
+            stringBuilder.append("Content Genres:");
+            if(contentGenreNames.length > 0) stringBuilder.append(" ").append(contentGenreNames[0]);
+            for(int i = 1; i < contentGenreNames.length; i++){
+                stringBuilder.append(", ").append(contentGenreNames[i]);
+            }
+            stringBuilder.append("\n");
+        }
+        if(buyProviders != null){
+            stringBuilder.append("You can buy this content from:");
+            if(buyProviders.length > 0) stringBuilder.append(" ").append(buyProviders);
+            for(int i = 1; i < buyProviders.length; i++){
+                stringBuilder.append(", ").append(buyProviders);
+            }
+            stringBuilder.append("\n");
+        }
+        if(rentalProviders != null){
+            stringBuilder.append("You can rent this content from:");
+            if(rentalProviders.length > 0) stringBuilder.append(" ").append(rentalProviders[0]);
+            for(int i = 1; i < rentalProviders.length; i++){
+                stringBuilder.append(", ").append(rentalProviders[i]);
+            }
+            stringBuilder.append("\n");
+        }
+        if(flatrateProviders != null){
+            stringBuilder.append("These companies offer this content under a flatrate subscription: ");
+            if(flatrateProviders.length > 0) stringBuilder.append(" ").append(flatrateProviders[0]);
+            for(int i = 1; i < flatrateProviders.length; i++){
+                stringBuilder.append(", ").append(flatrateProviders[i]);
+            }
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
+        
+        
     }
     
 }

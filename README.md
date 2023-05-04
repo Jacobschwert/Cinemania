@@ -37,7 +37,7 @@ Replace "account" with the table you want to use, and the values inside the pare
 # Generate ID
 Below is example of generating and ID, changes would need to be made to fit your requirements, but follow the general flow of this. <br>
 Boolean moveOn = false;<br>
-        int number = 0;<br>
+        \tint number = 0;<br>
         while (moveOn == false){ //Generate accountID<br>
             number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999<br>
             queryString = "SELECT accountID FROM account WHERE accountID = " + number + ";" ;<br>

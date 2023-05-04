@@ -4,13 +4,14 @@
 # Database
 Cinemania using a SQLite database for the storage of information regarding the function of the website.  
 Currently the tables listed below:
-- account: accountID, uName, password, Email, cManager, comments, reviews.
-- contentList: contentListID, listName, listDescription, contentIDs, authorID.
-- content: contentID, contentName, contentDescription, contentGenres, contentRating, reviews.  
-- contentManager: cmID, user, contentLists, pinnedLists, whereToWatch, watchStatus, reccomendationLists.
+- account: accountID, uName, password, description, email, cManager, comments, reviews.
+- contentList: contentListID, authorID, listName, listDescription, contentIDs.
+- movie: contentID, contentName, contentDescription, contentGenres, contentRating, reviews.  
+- tvShow: contentID, contentName, contentDescription, contentGenres, contentRating, reviews, seasons, episodes.  
+- contentManager: cmID, user, contentLists, pinnedLists, buyProviders, rentProviders, flatProviders.
 - watchStatus: uID, cID, status.
-- review: WIP.
-- comment: WIP.
+- review: feedbackID, feedbackContent, likes, feedbackAuthor, comments.
+- comment: feedbackID, feedbackContent, likes, feedbackAuthor.
 
 # Database usage
 To connect to the SQLite Database you need to download the jar file found the "lib" folder and add it to your class path.
@@ -32,3 +33,22 @@ queryString = "INSERT INTO account(accountID, uName, password, email, descriptio
  
 Other examples can be found in Account.java <br>
 Replace "account" with the table you want to use, and the values inside the parenthesis with the variables you want, then follow the same formatting for the vlues as show. Note when you are entering TEXT values that they are surrounded by '' in the query.
+
+# Generate ID
+Below is example of generating and ID, changes would need to be made to fit your requirements, but follow the general flow of this. <br>
+Boolean moveOn = false;
+        int number = 0;
+        while (moveOn == false){ //Generate accountID
+            number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
+            queryString = "SELECT accountID FROM account WHERE accountID = " + number + ";" ;
+            ResultSet rs;
+            try{
+                rs = query.executeQuery(queryString);
+                if (!rs.next()) {
+                    this.accountID = number;
+                    moveOn = true;
+                }
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }

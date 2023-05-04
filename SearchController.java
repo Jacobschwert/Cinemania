@@ -34,7 +34,7 @@ public class SearchController {
                 }
             }
 
-            ContentList selectedList = recommendationLists.get(choice);
+            ContentList selectedList = recommendationLists.get(choice - 1);
             ArrayList<Content> listContent = selectedList.getList();
             choice = 0;
             // Loop for selecting a specific piece of content in a content list
@@ -58,7 +58,7 @@ public class SearchController {
             // User should be able to: Create a Review, view reviews, and get access to watch status choices for a piece of content.
             // User should also be able to add content to content lists, but I'm guessing this will be implemented first
             // when the user is viewing their own content lists. (We could also give the user an option here to view their content lists here, then select one to add to)
-            Content selectedContent = listContent.get(choice);
+            Content selectedContent = listContent.get(choice - 1);
             choice = 0;
             int numberOfChoices = 2;
             selectedContent.toString(); // toString method will display necesarry information about the selected piece of content.

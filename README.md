@@ -35,9 +35,9 @@ Other examples can be found in Account.java <br>
 Replace "account" with the table you want to use, and the values inside the parenthesis with the variables you want, then follow the same formatting for the vlues as show. Note when you are entering TEXT values that they are surrounded by '' in the query.
 
 # Generate ID
-Below is example of generating and ID, changes would need to be made to fit your requirements, but follow the general flow of this. <br>
+Below is example of generating and ID, changes would need to be made to fit your requirements, but follow the general flow of this. Also found in account.java<br>
 Boolean moveOn = false;<br>
-        \tint number = 0;<br>
+        int number = 0;<br>
         while (moveOn == false){ //Generate accountID<br>
             number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999<br>
             queryString = "SELECT accountID FROM account WHERE accountID = " + number + ";" ;<br>

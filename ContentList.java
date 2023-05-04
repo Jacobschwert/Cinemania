@@ -27,8 +27,6 @@ public class ContentList
      */
     public ContentList()
     {
-        // **********************************************************************
-        // Will need a way to assign a unique ID, likely through Content Manager.
         this.contentListID = 0;
         this.numContents = 0;
         this.contentListName = "New List";
@@ -123,7 +121,6 @@ public class ContentList
      */
     public void setContentListID(int contentListID)
     {
-        // **************Inclusion of this is questionable.
         this.contentListID = contentListID;
     }
 
@@ -162,15 +159,15 @@ public class ContentList
     }
 
     /**
-     * Adds a list of Content to this list of Content so long as the hard cap is not reached.
+     * Adds a list of Content to this list of Content so long as the hard cap is not reached when doing so.
      * 
      * @param content - A list of Content to add
      */
     public void addContent(ArrayList<Content> contentList)
     {
-        if (!contentList.isEmpty())
+        if (!contentList.isEmpty() && (this.numContents + contentList.size()) < LIST_HARD_CAP)
         {
-            for (int i = 0; i < contentList.size() && this.numContents < LIST_HARD_CAP; i++)
+            for (int i = 0; i < contentList.size(); i++)
                 this.contents.add(contentList.get(i));
             this.numContents = this.contents.size();
         }
@@ -183,6 +180,7 @@ public class ContentList
      */
     public void removeContents(ArrayList<Integer> toRemove)
     {
+        Collections.sort(toRemove, Collections.reverseOrder());
         for (int i = 0; i < toRemove.size(); i++)
             contents.remove((int) toRemove.get(i));
         this.numContents = this.contents.size();

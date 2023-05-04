@@ -69,10 +69,9 @@ public class MainController {
                     flag = true;
                 }
             } 
-            else if (choice == 2) {
+            else if (choice == 2) { //Flag should be false? Unsure if the program should break or something here.
                 user = loginController.logout();
                 cm = null;
-                flag = true;
             }
             else if (choice == 3) {
                 user = loginController.signup();

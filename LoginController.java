@@ -13,7 +13,12 @@ public class LoginController {
         password = loginInfo.nextLine();
         loginInfo.close();
         Account loginAcct = new Account(uName, password);
-        return loginAcct;
+        if(loginAcct.getAccountNumber() == 0){
+            return null;
+        }
+        else{
+            return loginAcct;
+        }
     }
 
     public Account logout() {
@@ -27,7 +32,7 @@ public class LoginController {
         String email;
         String desc;
         
-        Scanner signupInfo = new Scanner(System.in); //close this
+        Scanner signupInfo = new Scanner(System.in);
 
         System.out.print("Enter Username: ");
         uName = signupInfo.nextLine();

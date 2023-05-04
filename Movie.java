@@ -7,4 +7,5 @@ public class Movie extends Content{
                         
         super(contentID, contentName, contentDescription, contentGenreNames, contentGenreIds, contentRating, reviewList, buyProviders, rentalProviders, flatrateProviders);
     }
+    
 }

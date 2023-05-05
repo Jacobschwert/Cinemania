@@ -84,4 +84,5 @@ CREATE TABLE comment (
     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 );
 
---SELECT accountID FROM account WHERE accountID = 7;
+DELETE FROM account;
+SELECT * FROM account;

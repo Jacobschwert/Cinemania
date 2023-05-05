@@ -1,6 +1,11 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FeedbackFactory {
+    private SqliteConnector db = new SqliteConnector();
+    private Connection conn = db.connect();
     
     public Comment createComment(String text, Review reviewTarget) throws IllegalArgumentException {
         Comment comment = null;
@@ -26,7 +31,17 @@ public class FeedbackFactory {
         return this.getComment();
     }
 
-    public Review getReview() {
-        return this.getReview();
+    public Review getReview(int feedbackID) throws SQLException{
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reviews WHERE feedbackID = ?");
+        stmt.setInt(1, feedbackID);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            String summary = rs.getString("summary");
+            int rating = rs.getInt("rating");
+            int likes = rs.getInt("likes");
+            return new Review(summary, rating, likes);
+        } else {
+            return null;
+        }
     }
 }

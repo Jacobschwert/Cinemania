@@ -48,29 +48,53 @@ public class MainController {
     
 
     private void listAccountOptions() {
-        System.out.println("1. Log In");
-        System.out.println("2. Log Out");
+        System.out.println("1: Log In");
+        System.out.println("2: Log Out");
         System.out.println("3: Sign Up");
-        System.out.println("4: Go back");
+        System.out.println("4: Edit account");
+        System.out.println("5: Go back");
         // Get user input
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-        
+        Boolean flag = false;
         // Call appropriate method based on user input
-        if (choice == 1) {
-            loginController.login();
-        } 
-        else if (choice == 2) {
-            loginController.logout();
-        }
-        else if (choice == 3) {
-            loginController.signup();
-        } 
-        else if (choice == 4) {
-            listStartupOptions();
-        }
-        else {
-            System.out.println("Invalid choice.");
+        Account user = null;
+        ContentManager cm;
+        while(!flag){
+            if (choice == 1) {
+                user = loginController.login();
+                if(user == null)
+                    System.out.println("Invalid Username and/or Password.");
+                else{
+                    cm = new ContentManager(user.getCManage(), user);
+                    flag = true;
+                }
+            } 
+            else if (choice == 2) { //Flag should be false? Unsure if the program should break or something here.
+                user = loginController.logout();
+                cm = null;
+            }
+            else if (choice == 3) {
+                user = loginController.signup();
+                cm = new ContentManager(user.getCManage(), user);
+                flag = true;
+            } 
+            else if (choice == 4) {
+                if(user == null){
+                    System.out.println("Sign in to your account first.");
+                }
+                else{
+                    flag = true;
+                    loginController.editAccount(user);  
+                }
+            }
+            else if (choice == 5) {
+                flag = true;
+                listStartupOptions();
+            }
+            else {
+                System.out.println("Invalid choice.");
+            }
         }
     }
     

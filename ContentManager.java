@@ -131,8 +131,24 @@ import java.sql.SQLException;
      * at the beginning of the list. The Controller will likely make use of this method in some way in order to display
      * user accounts to view.
      */
-    public ArrayList<Account> userSearch(String searchQuery){
-
+    public ArrayList<Account> userSearch(String userName){
+        queryString = "SELECT * FROM account WHERE uName = '" + userName + "';";
+        String u = "";
+        String p = "";
+        ResultSet rs;
+        ArrayList<Account> found = new ArrayList<Account>();
+        try{
+            rs = query.executeQuery(queryString);
+            if (rs.next()) {
+                u = Integer.toString(rs.getInt("accountID"));
+                p = rs.getString("password");
+                Account temp = new Account(u, p);
+                found.add(temp); //Found is going to be a list of every account that has the username
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return found; //This can be interpretted as a list or something similar in searchController
     }
 
     /* The point of this method is to pin a contentList to the current user's account for easy access.
@@ -140,7 +156,27 @@ import java.sql.SQLException;
      * This also means that the Controller needs a way to allow the user to view pinned lists.
      */
     public void pinList(ContentList listToPin){
+        this.pinnedLists.add((listToPin));
+        queryString = "SELECT pinnedLists FROM contentManager WHERE cmID = " + this.cmID + ";" ;
+        String placeholder = "";
+        ResultSet rs;
+        try{ //This part is intended to pull the current pinnedlists associated with this cmID
+            rs = query.executeQuery(queryString);
+            if (rs.next()) {
+                placeholder = rs.getString("pinnedLists");;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
 
+        placeholder = placeholder + ", " + Integer.toString(listToPin.getContentListID());
+
+        queryString = "UPDATE contentManager SET pinnedLists = '" + placeholder + "' WHERE cmID = " + this.cmID + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     /* A getter to allow the controller class access to the lists that are currently pinned.
@@ -148,7 +184,31 @@ import java.sql.SQLException;
      * from the database first.
      */
     public ArrayList<ContentList> getPinnedLists(){
-        return pinnedLists;
+        return this.pinnedLists;
+    }
+
+    public void removePinList(ContentList listToRemove){
+        this.pinnedLists.remove((listToRemove));
+        queryString = "SELECT pinnedLists FROM contentManager WHERE cmID = " + this.cmID + ";" ;
+        String placeholder = "";
+        ResultSet rs;
+        try{ //This part is intended to pull the current pinnedlists associated with this cmID
+            rs = query.executeQuery(queryString);
+            if (rs.next()) {
+                placeholder = rs.getString("pinnedLists");;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        placeholder = placeholder.replace(Integer.toString(listToRemove.getContentListID()), ""); //This should work, haven't tested it yet though 
+
+        queryString = "UPDATE contentManager SET pinnedLists = '" + placeholder + "' WHERE cmID = " + this.cmID + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     /* A helper method for the getRecommendationLists() method. This method is meant to generate a list of Recommendations that 

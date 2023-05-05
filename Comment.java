@@ -11,8 +11,6 @@ public class Comment extends Feedback{
     private Review reviewTarget;
     private int targetID;
 
-
-
     private SqliteConnector db = new SqliteConnector();
     private Connection conn = db.connect();
     private SqliteQueries query = new SqliteQueries(conn);
@@ -61,14 +59,16 @@ public class Comment extends Feedback{
         }
     }
     
-
-    public void editFeedback(String newText) {
+    
+    public void editFeedback() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter 'Y' to confirm you want to edit the comment");
+        System.out.println("Enter 'Y' to confirm you want to edit the comment or 'N' to cancel");
         String answer = scan.nextLine();
         scan.close();
         if(answer.equalsIgnoreCase("Y"))
         {
+            System.out.println("Enter your new comment text: ");
+            String newText = scan.nextLine();
             this.text = newText;
             queryString = "UPDATE comment SET text = '" + newText + "' WHERE feedback_id = " + feedbackID + ";";
             try{
@@ -144,4 +144,5 @@ public class Comment extends Feedback{
     public String toString() {
         return text;
     }
+
 }

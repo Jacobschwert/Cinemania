@@ -10,7 +10,6 @@ public class Review extends Feedback{
     private Account feedbackAuthor;
     private int feedbackID;
     private ArrayList<Comment> commentList;
-    private Content reviewTarget;
     private int targetID;
 
     private SqliteConnector db = new SqliteConnector();
@@ -20,9 +19,10 @@ public class Review extends Feedback{
     
 
     //Contructor for new review object
-    public Review(String summary, int rating) throws IllegalArgumentException {
+    public Review(String summary, int rating, Content reviewTarget, Account feedbackAuthor) throws IllegalArgumentException {
         this(summary, rating, 0);
         targetID = reviewTarget.getContentID();
+        feedbackAuthor = this.feedbackAuthor;
         queryString = "INSERT INTO review(text, likes, review_id, author_id) VALUES('" + summary + "', " + likes + ", " + targetID + ", " + feedbackAuthor.getAccountNumber() + ");";
         try {
             query.executeUpdate(queryString);
@@ -42,8 +42,6 @@ public class Review extends Feedback{
         this.summary = summary;
         this.rating = rating;
         this.likes = likes;
-        targetID = reviewTarget.getContentID();
-
     }
 
     //Method for adding likes to a review
@@ -191,7 +189,7 @@ public class Review extends Feedback{
                 comments += "\t" + c.toString() + "\n";
             }
         }
-        return "Summary: " + summary + "\n" + "Rating: " + rating + comments;
+        return feedbackAuthor.getUName() + " Says\nSummary: " + summary + "\n" + "Rating: " + rating + comments;
     }
     
 }

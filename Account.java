@@ -93,7 +93,7 @@ public class Account {
     }
 
     public int getAccountNumber() {
-        return accountID;
+        return this.accountID;
     }
 
     public void setAccountNumber(int number) { //This should NEVER be called, but I am adding functionality regardless
@@ -107,7 +107,7 @@ public class Account {
     }
 
     public String getUName() {
-        return userName;
+        return this.userName;
     }
 
     public void setUName(String uName) {
@@ -120,8 +120,22 @@ public class Account {
         this.userName = uName;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        queryString = "UPDATE account SET password = '" + password + "' WHERE accountID = " + this.accountID + ";";
+        try{
+            query.executeUpdate(queryString);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        this.password = password;
+    }
+
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String contact) {
@@ -192,14 +206,15 @@ public class Account {
 
 
     //Use case Edit Account
-    public void editAccount(String userName, String contact, String description, Boolean delete) { //In controller, just pass account.getUName() when not changing
+    public void editAccount(String userName, String contact, String description, String password, Boolean delete) {
         setEmail(contact);
         setUName(userName);
         setDescription(description);
+        setPassword(password);
         this.description = description;
         if(delete == true){ //This will be determined in the controller class
             Scanner deleting = new Scanner(System.in); //close this
-            System.out.println("Enter 'Yes' to confirm that you want to delete your account: ");
+            System.out.print("Enter 'Yes' to confirm that you want to delete your account: ");
             String response = deleting.nextLine();
             deleting.close();
             System.out.println("Account is being deleted.");

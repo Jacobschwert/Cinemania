@@ -48,10 +48,11 @@ public class MainController {
     
 
     private void listAccountOptions() {
-        System.out.println("1. Log In");
-        System.out.println("2. Log Out");
+        System.out.println("1: Log In");
+        System.out.println("2: Log Out");
         System.out.println("3: Sign Up");
-        System.out.println("4: Go back");
+        System.out.println("4: Edit account");
+        System.out.println("5: Go back");
         // Get user input
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
@@ -79,6 +80,10 @@ public class MainController {
                 flag = true;
             } 
             else if (choice == 4) {
+                flag = true;
+                loginController.editAccount(user);
+            }
+            else if (choice == 5) {
                 flag = true;
                 listStartupOptions();
             }

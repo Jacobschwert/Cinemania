@@ -276,10 +276,4 @@ public class Account {
         }
     }
 
-    //Below is account creation tester for both constructors
-    public static void main(String args[]){
-        // Account test = new Account("ted", "email", "description", "password");
-        // Account test2 = new Account("ted","password");
-        // System.out.println(test2.getAccountNumber());
-    }
 }

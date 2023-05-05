@@ -215,10 +215,10 @@ import java.sql.SQLException;
      * all fall under a shared category.
     */
     private ContentList generateRecommendationList(RecommendationType rType){
-        String contentListName;
-        String contentListDescription;
-        ArrayList<Content> contentArrayList;
-        // For content id, I need a way to generate a unique id.
+        String contentListName = null;
+        String contentListDescription = null;
+        ArrayList<Content> contentArrayList = null;
+        int contentListID = -1; // Garbage id, recommendation lists won't have to be stored in the database.
         switch(rType){
             case MOVIES_POPULAR:
                 contentArrayList = generateMovieContentArrayList(rType);
@@ -269,9 +269,11 @@ import java.sql.SQLException;
                 contentListName = "Sci-Fi & Fantasy";
                 contentListDescription = "Popular Science Fiction and Fantasy TV Shows according to The Movie Database";  
                 break;
+            default:
+                System.out.println("Generated recommended ContentList with null values, check the generateRecommendationList() method in the Content Manager.");
         }
 
-        // return a ContentList
+        return new ContentList(contentListID, contentArrayList.size(),contentListName,contentListDescription, contentArrayList);
     }
 
     // Helper method for generating and composing a list of movie objects into an ArrayList of Content objects relating to a search query.

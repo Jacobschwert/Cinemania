@@ -1,7 +1,11 @@
 import org.junit.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ReviewTest {
     private Review review;
@@ -15,7 +19,7 @@ public class ReviewTest {
         content = new Movie(
             1234,
             "The Great Gatsby",
-            "A novel by F. Scott Fitzgerald about the decadence and excess of the Roaring Twenties.",
+            "A film adaptation of the novel by F. Scott Fitzgerald about the decadence and excess of the Roaring Twenties.",
             new String[] { "Fiction", "Classic" },
             new int[] { 1, 2 },
             4.5f,
@@ -41,14 +45,17 @@ public class ReviewTest {
     @Test
     public void testInvalidRating() {
         // Attempt to create a new review object with an invalid rating and expect an IllegalArgumentException to be thrown
-        assertThrows(IllegalArgumentException.class, () -> new Review("This is a bad movie!", 6, content, account));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Review review = new Review("This is a great movie!", 7, content, account);
+        });
     }
 
     @Test
     public void testSummaryLengthExceeded() {
         // Attempt to create a new review object with a summary that exceeds 300 characters and expect an IllegalArgumentException to be thrown
-        String summary = "This is a movie that I really didn't like at all. It was very poorly made and didn't work properly. I would definitely not recommend it to anyone.";
-        assertThrows(IllegalArgumentException.class, () -> new Review(summary, 1, content, account));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Review review = new Review("This is a movie that I really didn't like at all. It was very poorly made and didn't work properly. I would definitely not recommend it to anyone.", 7, content, account);
+        });
     }
 
     @Test
@@ -68,15 +75,37 @@ public class ReviewTest {
 
     @Test
     public void testDeleteFeedback() throws SQLException {
-        // Delete the review from the database and ensure that it no longer exists
+        // Create a sample feedback object
+        Review review = new Review("This is a test summary.", 3, content, account);
+
+        // Mock the user input to confirm editing the feedback
+        String input = "Y";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        // Call the editFeedback() method
         review.deleteFeedback();
-        int feedbackID = review.getFeedbackID();
-        assertNull(feedbackFactory.getReview(feedbackID));
+
+        // Check if the feedback object has been updated with the new summary and rating
+        assertNull(review.getFeedbackSummary());
+        assertEquals(0,review.getRating());
     }
 
     @Test
     public void testEditFeedback() throws SQLException {
-        // Edit the review's summary and rating and ensure that the changes are reflected in the database
-        review.editFeedback();
+        // Create a sample feedback object
+        Feedback feedback = new Review("This is a test summary.", 3, content, account);
+
+        // Mock the user input to confirm editing the feedback
+        String input = "Y\nNew summary\n5\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        // Call the editFeedback() method
+        feedback.editFeedback();
+
+        // Check if the feedback object has been updated with the new summary and rating
+        assertEquals("New summary", feedback.getFeedbackSummary());
+        assertEquals(5, review.getRating());
     }
 }

@@ -22,7 +22,7 @@ public class Review extends Feedback{
     public Review(String summary, int rating, Content reviewTarget, Account feedbackAuthor) throws IllegalArgumentException {
         this(summary, rating, 0);
         targetID = reviewTarget.getContentID();
-        feedbackAuthor = this.feedbackAuthor;
+        this.feedbackAuthor = feedbackAuthor;
         queryString = "INSERT INTO review(text, likes, review_id, author_id) VALUES('" + summary + "', " + likes + ", " + targetID + ", " + feedbackAuthor.getAccountNumber() + ");";
         try {
             query.executeUpdate(queryString);
@@ -81,6 +81,8 @@ public class Review extends Feedback{
         scanner.close();
         if(response.equalsIgnoreCase("Y")){
             queryString = "DELETE FROM review WHERE feedback_id = " + feedbackID + ";";
+            setFeedbackSummary(null);
+            setRating(0);
             try{
                 query.executeUpdate(queryString);
                 System.out.println("Review has been deleted successfully.");

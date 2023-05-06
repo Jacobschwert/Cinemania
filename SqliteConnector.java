@@ -9,7 +9,7 @@ public class SqliteConnector implements Connector {
         Connection conn = null;
         try {
             // db parameters
-            String url = "jdbc:sqlite:C:/Users/jacob/Desktop/IT 326/tableDB/cinemania.db";  //For testing you need to change this filepath to reference where you have the db saved
+            String url = "jdbc:sqlite:cinemania.db";  //For testing you need to change this filepath to reference where you have the db saved
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 

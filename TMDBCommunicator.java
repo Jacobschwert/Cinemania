@@ -16,7 +16,7 @@ public class TMDBCommunicator {
     // Needs to be hidden from GitHub and the public in general.
     // For now, I'll just avoid pushing my key, keeping this as an empty string before commits (otherwise, the key will be public in the git history)
     // Don't push a commit with an actual API_KEY stored here, just use it for testing.
-    private static final String API_KEY = "";
+    private static final String API_KEY = "c75eadbc8c681679c1367a2c3f62e19a";
 
     // A method for getting TMDB movie info that matches with a recommendation type.
     public static TMDBMovieResultList getRecommendationListMovieResults(ContentManager.RecommendationType rType){
@@ -118,7 +118,7 @@ public class TMDBCommunicator {
 
     // This method will parse JSON gathered from TMDB with the help of the GSON library. 
     // It gathers JSON information about movies based on a search query.
-    public static TMDBMovieResultList getContentSearchMovieResultList(String searchQuery){
+    public static TMDBMovieResultList getContentSearchMovieResultList(String searchQuery){ //https://api.themoviedb.org/3/search/movie?api_key=c75eadbc8c681679c1367a2c3f62e19a&language=en-US&query=Wow&include_adult=false
         HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&language=en-US&query=%s&include_adult=false", API_KEY, searchQuery));
         Gson gson = new Gson();
         TMDBMovieResultList movieResultList = gson.fromJson(getResponse.body(), TMDBMovieResultList.class);
@@ -156,7 +156,7 @@ public class TMDBCommunicator {
     // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
     // (Requires an API Key)
     private static TMDBTVResultList getPopularTVResultList(){
-        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en", API_KEY));
+        HttpResponse<String> getResponse = getRequestWithURL("https://api.themoviedb.org/3/discover/tv?api_key="+ API_KEY + "&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en");
         Gson gson = new Gson();
         TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
         return tvResultList;
@@ -166,7 +166,7 @@ public class TMDBCommunicator {
     // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
     // (Requires an API Key)
     private static TMDBTVResultList getPopularTVResultList(int genreId){
-        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=%d", API_KEY, genreId));
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key="+ API_KEY + "&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=" + genreId));
         Gson gson = new Gson();
         TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
         return tvResultList;
@@ -182,7 +182,7 @@ public class TMDBCommunicator {
 
     // Returns a TMDB Genre list that contains all types of tv genres and their ids.
     private static TMDBGenreList getTMDBTVGenreList(){
-        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/genre/tv/list?api_key=&language=en-US", API_KEY));
+        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/genre/tv/list?api_key=%s&language=en-US", API_KEY));
         Gson gson = new Gson();
         TMDBGenreList genreList = gson.fromJson(getResponse.body(), TMDBGenreList.class);
         return genreList;
@@ -227,6 +227,8 @@ public class TMDBCommunicator {
             return null;
         }
     }
+
+
 
     //Just using this for testing purposes.
     // public static void main(String args[]){

@@ -14,7 +14,7 @@ public class ContentFactory {
 
     }
 
-    public static TVShow getTVShowFromContentID(int contentID){
+    public static TVShow getTShowFromContentID(int contentID){
 
     }
 
@@ -27,11 +27,15 @@ public class ContentFactory {
         String[] genreNames = TMDBCommunicator.getMovieGenresByTMDBID(contentGenreIds);
 
         TMDBCountryWatchOptionList usList = movieWatchOption.getResults().getUSOptionList();
-        String[] buyProviders = getProviderNamesFromProviderInfoArray(usList.getBuyOptions());
-        String[] rentalProviders = getProviderNamesFromProviderInfoArray(usList.getRentOptions());
-        String[] flatrateProviders = getProviderNamesFromProviderInfoArray(usList.getFlatrateOptions());
+        String[] buyProviders = null;
+        String[] rentalProviders = null;
+        String[] flatrateProviders = null;
+        if(usList != null){
+            if(usList.getBuyOptions() != null) buyProviders = getProviderNamesFromProviderInfoArray(usList.getBuyOptions());
+            if(usList.getRentOptions() != null) rentalProviders = getProviderNamesFromProviderInfoArray(usList.getRentOptions());
+            if(usList.getFlatrateOptions() != null) flatrateProviders = getProviderNamesFromProviderInfoArray(usList.getFlatrateOptions());
+        }
         ArrayList<Review> reviewList = null;
-
         String queryString = "SELECT reviews FROM movie WHERE contentID = " + contentId + ";" ;
         ResultSet rs;
         String unparsedReviewIds;
@@ -76,10 +80,18 @@ public class ContentFactory {
         int[] contentGenreIds = result.getGenreIds();
         String[] genreNames = TMDBCommunicator.getTVGenresByTMDBID(contentGenreIds);
 
-        TMDBCountryWatchOptionList usList = tvWatchOption.getResults().getUSOptionList();
-        String[] buyProviders = getProviderNamesFromProviderInfoArray(usList.getBuyOptions());
-        String[] rentalProviders = getProviderNamesFromProviderInfoArray(usList.getRentOptions());
-        String[] flatrateProviders = getProviderNamesFromProviderInfoArray(usList.getFlatrateOptions());
+        TMDBCountryWatchOptionList usList = null;
+        if(tvWatchOption.getResults() != null){
+            usList = tvWatchOption.getResults().getUSOptionList();
+        }
+        String[] buyProviders = null;
+        String[] rentalProviders = null;
+        String[] flatrateProviders = null;
+        if(usList != null){
+            if(usList.getBuyOptions() != null) buyProviders = getProviderNamesFromProviderInfoArray(usList.getBuyOptions());
+            if(usList.getRentOptions() != null) rentalProviders = getProviderNamesFromProviderInfoArray(usList.getRentOptions());
+            if(usList.getFlatrateOptions() != null) flatrateProviders = getProviderNamesFromProviderInfoArray(usList.getFlatrateOptions());
+        }
         ArrayList<Review> reviewList = null;
 
         String queryString = "SELECT reviews FROM tvShow WHERE contentID = " + contentId + ";" ;

@@ -19,7 +19,7 @@ public class SearchController {
             int choice = 0;
             // Loop for selecting a specific recommendation List.
             System.out.println("Enter a number matching a recommendation list, or, type 'back' to go back to the main menu");
-            displayRecommendationListSummaries(recommendationLists);
+            displayContentListSummaries(recommendationLists);
             while(choice < 1 || choice > recommendationLists.size()){
                 String userInput = scanner.nextLine().trim();
                 if(userInput.equalsIgnoreCase("back")){
@@ -97,6 +97,7 @@ public class SearchController {
         System.out.println("Searching Users");
         // This method is going to call the userSearch method on the ContentManager and get an ArrayList of Accounts.
         // Show names, descriptions, content lists, potentially pinned lists.
+        // There is a displayContentListSummaries() method
         // ContentList objects actually a method on them for displaying them called displayList(), will display a content list and a numbered list of their content.
         // When viewing content lists, viewing the content in the lists is not absolutely required.
         
@@ -167,10 +168,11 @@ public class SearchController {
 
     }
 
-    // for testing
-    // public static void main(String[] args){
-    //     ContentManager cManager = new ContentManager(0, null);
-    //     SearchController searchController = new SearchController();
-    //     searchController.viewReccomendations(cManager);
-    // }
+    //for testing
+    public static void main(String[] args){
+        ContentManager cManager = new ContentManager(0, null);
+        SearchController searchController = new SearchController();
+        CreationController creationController = new CreationController();
+        searchController.viewRecommendations(cManager, creationController);
+    }
 }

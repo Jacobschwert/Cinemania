@@ -31,5 +31,7 @@ public class TMDBCommunicatorTest {
                 if(flatrateInfos == null) System.out.println("Null flatrate info array!");
             }
         }
+        @Test
+        public void getRecommendationListMovieResults
     }
 }

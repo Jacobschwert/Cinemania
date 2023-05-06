@@ -37,7 +37,7 @@ public class TesterComment {
     }
     @Test
     public void testValidCreation() {
-        // Ensure that the review object was created with the correct summary and rating
+        // Ensure that the comment object was created with the correct length
         assertEquals("I agree that this was a good movie!!", comment.getFeedbackSummary());
     }
 
@@ -57,6 +57,7 @@ public class TesterComment {
     }
 
     @Test
+    //Attempts to remove a like
     public void testRemoveLike() throws SQLException{
         comment.addLike();
         comment.removeLike();
@@ -64,6 +65,7 @@ public class TesterComment {
     }
 
     @Test
+    //Atttempts to edit a comment to have a new string
     public void testEditFeedback() throws SQLException{
         Comment comment = new Comment("This is an edited comment",content, account);
 
@@ -76,6 +78,7 @@ public class TesterComment {
     }
 
     @Test
+    //Attempts to delete a comment
     public void testDeleteFeedback() throws SQLException{
         Comment comment = new Comment("This is a test comment",content, account);
         String input = "Y";
@@ -84,11 +87,6 @@ public class TesterComment {
         comment.deleteFeedback();
         assertNull(comment.getFeedbackSummary());
         assertEquals(null,comment.getFeedbackSummary());
-        // ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        // System.setOut(new PrintStream(outContent));
-        // comment.deleteFeedback();
-        // assertEquals("Comment has been deleted successfully.\n", outContent.toString());
-        // System.setOut(System.out);
     }
     
 

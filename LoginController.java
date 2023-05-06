@@ -1,17 +1,14 @@
-import java.util.Scanner;
-
 public class LoginController {
 
     public Account login() {
         String uName;
         String password;
-        Scanner loginInfo = new Scanner(System.in); 
+
 
         System.out.print("Enter Username: ");
-        uName = loginInfo.nextLine();
+        uName = Main.scanner.nextLine();
         System.out.print("Enter Password: ");
-        password = loginInfo.nextLine();
-        loginInfo.close();
+        password = Main.scanner.nextLine();
         Account loginAcct = new Account(uName, password);
         if(loginAcct.getAccountNumber() == 0){
             return null;
@@ -31,18 +28,15 @@ public class LoginController {
         String password;
         String email;
         String desc;
-        
-        Scanner signupInfo = new Scanner(System.in);
 
         System.out.print("Enter Username: ");
-        uName = signupInfo.nextLine();
+        uName = Main.scanner.nextLine();
         System.out.print("Enter Password: ");
-        password = signupInfo.nextLine();
+        password = Main.scanner.nextLine();
         System.out.print("Enter Email: ");
-        email = signupInfo.nextLine();
+        email = Main.scanner.nextLine();
         System.out.print("Enter Description: ");
-        desc = signupInfo.nextLine();
-        signupInfo.close();
+        desc = Main.scanner.nextLine();
         Account signupAcct = new Account(uName, email, desc, password);
         return signupAcct;
     }
@@ -54,36 +48,33 @@ public class LoginController {
         String desc;
         String tempToDelete;
         Boolean toDelete = false;
-        
-        Scanner editInfo = new Scanner(System.in);
 
         System.out.println("Enter 'n' if you don't want to change a value.");
         System.out.print("Enter Username: ");
-        uName = editInfo.nextLine();
+        uName = Main.scanner.nextLine();
         if(uName.equals("n")){
             uName = accountEdit.getUName();
         }
         System.out.print("Enter Password: ");
-        password = editInfo.nextLine();
+        password = Main.scanner.nextLine();
         if(password.equals("n")){
             password = accountEdit.getPassword();
         }
         System.out.print("Enter Email: ");
-        email = editInfo.nextLine();
+        email = Main.scanner.nextLine();
         if(email.equals("n")){
             email = accountEdit.getEmail();
         }
         System.out.print("Enter Description: ");
-        desc = editInfo.nextLine();
+        desc = Main.scanner.nextLine();
         if(desc.equals("n")){
             desc = accountEdit.getDescription();
         }
         System.out.print("Do you want to delete your account(y/n)? ");
-        tempToDelete = editInfo.nextLine();
+        tempToDelete = Main.scanner.nextLine();
         if(tempToDelete.equals("y")){
             toDelete = true;
         }
-        editInfo.close();
 
         accountEdit.editAccount(uName, email, desc, password, toDelete);
     }

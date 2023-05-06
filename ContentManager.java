@@ -47,6 +47,23 @@ import java.sql.SQLException;
     // Getter for contentLists.
     public ArrayList<ContentList> getContentLists()
     {
+        // The content manager table stores the ids of all content lists attached to it.
+        // We get the ids in an array.
+
+        // create an empty ArrayList of ContentLists
+
+        //For each content list id, query the contentList table, store the contentListID, authorID, listName, listDescription in variables.
+        // when it comes to the contentIDs variable, do the following:
+            // Create an empty ArrayList of Content Objects.
+            // ArrayList<Content> contentList = new ArrayList<Content>
+            // for(int i = 0; i < contentList.size(); i++){
+                // if(contentList.get(i) instanceof Movie.class){
+                    // contentList.add(ContentFactory.getMovieFromContentID(int contentID))
+                //}
+                    //else{ same thing but using the TVShow version }
+            //} 
+        // Now we've colected all the variables necesarry to create a ContentList object using the constructor. After creating, add to the empty ArrayList of ContentLists.
+
         return this.contentLists;
     }
 
@@ -215,10 +232,10 @@ import java.sql.SQLException;
      * all fall under a shared category.
     */
     private ContentList generateRecommendationList(RecommendationType rType){
-        String contentListName;
-        String contentListDescription;
-        ArrayList<Content> contentArrayList;
-        // For content id, I need a way to generate a unique id.
+        String contentListName = null;
+        String contentListDescription = null;
+        ArrayList<Content> contentArrayList = null;
+        int contentListID = -1; // Garbage id, recommendation lists won't have to be stored in the database.
         switch(rType){
             case MOVIES_POPULAR:
                 contentArrayList = generateMovieContentArrayList(rType);
@@ -269,9 +286,11 @@ import java.sql.SQLException;
                 contentListName = "Sci-Fi & Fantasy";
                 contentListDescription = "Popular Science Fiction and Fantasy TV Shows according to The Movie Database";  
                 break;
+            default:
+                System.out.println("Generated recommended ContentList with null values, check the generateRecommendationList() method in the Content Manager.");
         }
 
-        // return a ContentList
+        return new ContentList(contentListID, contentArrayList.size(),contentListName,contentListDescription, contentArrayList);
     }
 
     // Helper method for generating and composing a list of movie objects into an ArrayList of Content objects relating to a search query.

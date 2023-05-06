@@ -4,7 +4,9 @@ public class MainController {
     LoginController loginController = new LoginController();
     SearchController searchController = new SearchController();
     CreationController creationController = new CreationController();
-    
+    Account user;
+    ContentManager cm;
+
     public void listStartupOptions() {
         // Print welcome message
         System.out.println("\n\n\n\n\n\n");
@@ -58,8 +60,6 @@ public class MainController {
         int choice = scanner.nextInt();
         Boolean flag = false;
         // Call appropriate method based on user input
-        Account user = null;
-        ContentManager cm;
         while(!flag){
             if (choice == 1) {
                 user = loginController.login();
@@ -67,7 +67,6 @@ public class MainController {
                     System.out.println("Invalid Username and/or Password.");
                 else{
                     cm = new ContentManager(user.getCManage(), user);
-                    flag = true;
                 }
             } 
             else if (choice == 2) { //Flag should be false? Unsure if the program should break or something here.
@@ -77,14 +76,12 @@ public class MainController {
             else if (choice == 3) {
                 user = loginController.signup();
                 cm = new ContentManager(user.getCManage(), user);
-                flag = true;
             } 
             else if (choice == 4) {
                 if(user == null){
                     System.out.println("Sign in to your account first.");
                 }
                 else{
-                    flag = true;
                     loginController.editAccount(user);  
                 }
             }

@@ -6,7 +6,7 @@ public class TVShow extends Content{
     // private int episodes;
 
     public TVShow(int contentID, String contentName, String contentDescription, String[] contentGenreNames, 
-                  int[] contentGenreIds, Float contentRating, ArrayList<Review> reviewList, String[] buyProviders, String[] rentalProviders, String[] flatrateProviders, int seasons, int episodes){
+                  int[] contentGenreIds, Float contentRating, ArrayList<Review> reviewList, String[] buyProviders, String[] rentalProviders, String[] flatrateProviders){
 
         super(contentID, contentName, contentDescription, contentGenreNames, contentGenreIds, contentRating, reviewList, buyProviders, rentalProviders, flatrateProviders);
 

@@ -1,7 +1,6 @@
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,7 +28,7 @@ public class Comment extends Feedback{
         this.likes = 0;
         targetID = commentTarget.getFeedbackID();
         this.feedbackAuthor = feedbackAuthor;
-        queryString = "INSERT INTO comment(text, likes, review_ID, author_id) VALUES('" + text + "', " + likes + ", " + commentTarget.getFeedbackID() + ", " + feedbackAuthor.getAccountNumber() + ");";
+        queryString = "INSERT INTO comment(feedbackContent, likes, review_ID, feedbackAuthor) VALUES('" + text + "', " + likes + ", " + commentTarget.getFeedbackID() + ", " + feedbackAuthor.getAccountNumber() + ");";
         try {
             query.executeUpdate(queryString);
         } catch(SQLException e) {
@@ -40,7 +39,7 @@ public class Comment extends Feedback{
     //Adds a like to a comment
     public void addLike() {
         this.likes++;
-        queryString = "UPDATE comment SET likes = " + likes + " WHERE feedback_id = " + feedbackID + ";";
+        queryString = "UPDATE comment SET likes = " + likes + " WHERE feedbackAuthor = " + feedbackID + ";";
         try {
             query.executeUpdate(queryString);
             System.out.println("Like added successfully.");
@@ -52,7 +51,7 @@ public class Comment extends Feedback{
     public void removeLike() {
         if (this.likes > 0) {
             this.likes--;
-            queryString = "UPDATE comment SET likes = " + likes + " WHERE feedback_id = " + feedbackID + ";";
+            queryString = "UPDATE comment SET likes = " + likes + " WHERE feedbackAuthor = " + feedbackID + ";";
             try {
                 query.executeUpdate(queryString);
                 System.out.println("Like removed successfully.");
@@ -71,7 +70,7 @@ public class Comment extends Feedback{
             System.out.println("Enter your new comment text: ");
             String newText = scanner.nextLine();
             this.text = newText;
-            queryString = "UPDATE comment SET text = '" + newText + "' WHERE feedback_id = " + feedbackID + ";";
+            queryString = "UPDATE comment SET feedbackContent = '" + newText + "' WHERE feedbackAuthor = " + feedbackID + ";";
             try{
                 query.executeUpdate(queryString);
                 System.out.println("Comment has been edited successfully");
@@ -93,7 +92,7 @@ public class Comment extends Feedback{
         if(response.equalsIgnoreCase("Y")){
             setFeedbackSummary(null);
             setLikes(0);
-            queryString = "DELETE FROM comment WHERE feedback_id = " + feedbackID + ";";
+            queryString = "DELETE FROM comment WHERE feedbackAuthor = " + feedbackID + ";";
             try{
                 query.executeUpdate(queryString);
                 System.out.println("Comment has been deleted successfully.");
@@ -109,9 +108,9 @@ public class Comment extends Feedback{
         Random rand = new Random();
         Boolean moveOn = false;
         int number = 0;
-        while (moveOn == false){ //Generate accountID
+        while (moveOn == false){ //Generate commentID
             number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
-            queryString = "SELECT feedbackID FROM account WHERE feedbackID = " + number + ";" ;
+            queryString = "SELECT feedbackAuthor FROM account WHERE feedbackAuthor = " + number + ";" ;
             ResultSet rs;
             try{
                 rs = query.executeQuery(queryString);
@@ -174,8 +173,6 @@ public class Comment extends Feedback{
 
     public String toString() {
         return "Comment by " + feedbackAuthor.getUName() + ": " + text + " (Likes: " + likes + ")";
-
-        
     }
 
 }

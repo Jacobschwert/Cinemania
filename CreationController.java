@@ -23,14 +23,14 @@ public class CreationController {
         scanner.close();
     }
 
-    public void createComment(int feedbackID) throws SQLException {
+    public void createComment(int feedbackID, Account feedbackAuthor) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         Review review = FeedbackFactory.getReview(feedbackID);
 
         System.out.println("Enter comment: ");
         String text = scanner.next();
 
-        Comment comment = FeedbackFactory.createComment(text, review);
+        Comment comment = FeedbackFactory.createComment(text, review, feedbackAuthor);
         System.out.println("Comment created: " + comment.getFeedbackSummary());
 
         scanner.close();

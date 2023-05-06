@@ -7,10 +7,10 @@ public class FeedbackFactory {
     private static SqliteConnector db = new SqliteConnector();
     private static Connection conn = db.connect();
     
-    public static Comment createComment(String text, Review reviewTarget) throws IllegalArgumentException {
+    public static Comment createComment(String text, Review reviewTarget, Account feedbackAuthor) throws IllegalArgumentException {
         Comment comment = null;
         try {
-            comment = new Comment(text, reviewTarget);
+            comment = new Comment(text, reviewTarget, feedbackAuthor);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -26,15 +26,15 @@ public class FeedbackFactory {
         }
         return review;
     }
-
-    public static Comment getComment(int feedbackID) throws SQLException {
+    
+    public static Comment getComment(int feedbackID, Account feedbackAuthor) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM comment WHERE feedbackID = ?");
         stmt.setInt(1, feedbackID);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             String text = rs.getString("summary");
             Review review = (Review) rs.getRef(feedbackID);
-            return new Comment(text, review);
+            return new Comment(text, review, feedbackAuthor);
         } else {
             return null;
         }

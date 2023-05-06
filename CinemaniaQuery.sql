@@ -73,6 +73,7 @@ CREATE TABLE review (
     likes INTEGER,
     feedbackAuthor INTEGER,
     comments TEXT,
+    reviewContent TEXT,
     FOREIGN KEY(feedbackAuthor) REFERENCES account(accountID)
 );
 

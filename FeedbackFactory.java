@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FeedbackFactory {
-    private SqliteConnector db = new SqliteConnector();
-    private Connection conn = db.connect();
+    private static SqliteConnector db = new SqliteConnector();
+    private static Connection conn = db.connect();
     
-    public Comment createComment(String text, Review reviewTarget) throws IllegalArgumentException {
+    public static Comment createComment(String text, Review reviewTarget) throws IllegalArgumentException {
         Comment comment = null;
         try {
             comment = new Comment(text, reviewTarget);
@@ -17,7 +17,7 @@ public class FeedbackFactory {
         return comment;
     }
     
-    public Review createReview(String summary, int rating, Content content, Account author) throws SQLException {
+    public static Review createReview(String summary, int rating, Content content, Account author) throws SQLException {
         Review review = null;
         try {
             review = new Review(summary, rating, content, author);
@@ -27,11 +27,20 @@ public class FeedbackFactory {
         return review;
     }
 
-    public Comment getComment() {
-        return this.getComment();
+    public static Comment getComment(int feedbackID) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM comment WHERE feedbackID = ?");
+        stmt.setInt(1, feedbackID);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            String text = rs.getString("summary");
+            Review review = (Review) rs.getRef(feedbackID);
+            return new Comment(text, review);
+        } else {
+            return null;
+        }
     }
 
-    public Review getReview(int feedbackID) throws SQLException{
+    public static Review getReview(int feedbackID) throws SQLException{
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reviews WHERE feedbackID = ?");
         stmt.setInt(1, feedbackID);
         ResultSet rs = stmt.executeQuery();

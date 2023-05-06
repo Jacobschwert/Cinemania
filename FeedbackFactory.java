@@ -17,10 +17,10 @@ public class FeedbackFactory {
         return comment;
     }
     
-    public Review createReview(String summary, int rating) throws SQLException {
+    public Review createReview(String summary, int rating, Content content, Account author) throws SQLException {
         Review review = null;
         try {
-            review = new Review(summary, rating);
+            review = new Review(summary, rating, content, author);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

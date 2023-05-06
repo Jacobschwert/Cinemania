@@ -95,6 +95,8 @@ public class SearchController {
 
     public void searchUsers() {
         System.out.println("Searching Users");
+        // Show names, descriptions, content lists, potentially pinned lists.
+        // When viewing content lists, viewing the content in the lists is not absolutely required.
         
     }
 

@@ -31,13 +31,13 @@ public class TesterComment {
         // Create a new review object with valid parameters
         review = new Review("This is a great movie!", 5, content, account);
         // Create a new comment on a review
-        comment = new Comment("I agree that this was a good movie!!", content,account);
+        comment = new Comment("I agree that this was a good movie!!", review,account);
         // Create a FeedbackFactory to handle creation and retreival of the comment
         feedbackFactory = new FeedbackFactory();
     }
     @Test
     public void testValidCreation() {
-        // Ensure that the comment object was created with the correct length
+        // Ensure that the review object was created with the correct summary and rating
         assertEquals("I agree that this was a good movie!!", comment.getFeedbackSummary());
     }
 
@@ -45,7 +45,7 @@ public class TesterComment {
     public void testCommentLengthExceeded() {
         // Attempt to create a new comment object with text that exceeds 150 characters and expect an IllegalArgumentException to be thrown
         assertThrows(IllegalArgumentException.class, () -> {
-            Comment comment = new Comment("This is a movie that I really didn't like at all. It was very poorly made and didn't work properly. I would definitely not recommend it to anyone not even my mother.", content, account);
+            Comment comment = new Comment("This is a movie that I really didn't like at all. It was very poorly made and didn't work properly. I would definitely not recommend it to anyone not even my mother.", review, account);
         });
     }
 
@@ -57,7 +57,6 @@ public class TesterComment {
     }
 
     @Test
-    //Attempts to remove a like
     public void testRemoveLike() throws SQLException{
         comment.addLike();
         comment.removeLike();
@@ -65,9 +64,8 @@ public class TesterComment {
     }
 
     @Test
-    //Atttempts to edit a comment to have a new string
     public void testEditFeedback() throws SQLException{
-        Comment comment = new Comment("This is an edited comment",content, account);
+        Comment comment = new Comment("This is an edited comment",review, account);
 
         String input = "Y\nNew comment\n5\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -78,9 +76,8 @@ public class TesterComment {
     }
 
     @Test
-    //Attempts to delete a comment
     public void testDeleteFeedback() throws SQLException{
-        Comment comment = new Comment("This is a test comment",content, account);
+        Comment comment = new Comment("This is a test comment",review, account);
         String input = "Y";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -88,6 +85,4 @@ public class TesterComment {
         assertNull(comment.getFeedbackSummary());
         assertEquals(null,comment.getFeedbackSummary());
     }
-    
-
 }

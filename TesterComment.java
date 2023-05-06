@@ -26,13 +26,13 @@ public class TesterComment {
             new String[] { "Amazon", "Google Play", "Apple" },
             new String[] { "Netflix", "Hulu" },
             new String[] { "Prime Video", "HBO Max" });
-        // Create the account that will be making the review
+        // Create the account that will be making the comment
         account = new Account("johndoe", "johndoe@example.com", "A new user", "password123");
         // Create a new review object with valid parameters
         review = new Review("This is a great movie!", 5, content, account);
         // Create a new comment on a review
         comment = new Comment("I agree that this was a good movie!!", content,account);
-        // Create a FeedbackFactory to handle creation and retreival of the review
+        // Create a FeedbackFactory to handle creation and retreival of the comment
         feedbackFactory = new FeedbackFactory();
     }
     @Test

@@ -95,7 +95,9 @@ public class SearchController {
 
     public void searchUsers() {
         System.out.println("Searching Users");
+        // This method is going to call the userSearch method on the ContentManager and get an ArrayList of Accounts.
         // Show names, descriptions, content lists, potentially pinned lists.
+        // ContentList objects actually a method on them for displaying them called displayList(), will display a content list and a numbered list of their content.
         // When viewing content lists, viewing the content in the lists is not absolutely required.
         
     }
@@ -135,14 +137,16 @@ public class SearchController {
 
     }
 
+    // Calls ContentManager.getPinnedLists() Gives you an ArrayList of contentList objects.
     public void viewPinnedLists(){
+        // view titles and descriptions of pinned lists, view content within if theres time.
 
     }
 
     // Display a generic overview of each Recommendation List, meant to help the user narrow down their content searching.
-    private void displayRecommendationListSummaries(ArrayList<ContentList> recommendationLists){
-        for(int i = 1; i < recommendationLists.size() + 1; i++){
-            ContentList rList = recommendationLists.get(i - 1);
+    private void displayContentListSummaries(ArrayList<ContentList> contentListSummaries){
+        for(int i = 1; i < contentListSummaries.size() + 1; i++){
+            ContentList rList = contentListSummaries.get(i - 1);
             System.out.println(i + ". " + rList.getContentListName() + " - " + rList.getContentListDescription());
         }
     }

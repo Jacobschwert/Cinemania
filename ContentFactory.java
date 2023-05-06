@@ -10,6 +10,14 @@ public class ContentFactory {
     private static Connection conn = db.connect();
     private static SqliteQueries query = new SqliteQueries(conn);
 
+    public static Movie getMovieFromContentID(int contentID){
+
+    }
+
+    public static TVShow getTVShowFromContentID(int contentID){
+
+    }
+
     // A method for creating a Movie object from TMDB information.
     public static Movie getMovieFromTMDBMovieInfo(TMDBMovieResult result, TMDBWatchOption movieWatchOption){
         int contentId = result.getId(); 

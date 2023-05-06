@@ -47,6 +47,23 @@ import java.sql.SQLException;
     // Getter for contentLists.
     public ArrayList<ContentList> getContentLists()
     {
+        // The content manager table stores the ids of all content lists attached to it.
+        // We get the ids in an array.
+
+        // create an empty ArrayList of ContentLists
+
+        //For each content list id, query the contentList table, store the contentListID, authorID, listName, listDescription in variables.
+        // when it comes to the contentIDs variable, do the following:
+            // Create an empty ArrayList of Content Objects.
+            // ArrayList<Content> contentList = new ArrayList<Content>
+            // for(int i = 0; i < contentList.size(); i++){
+                // if(contentList.get(i) instanceof Movie.class){
+                    // contentList.add(ContentFactory.getMovieFromContentID(int contentID))
+                //}
+                    //else{ same thing but using the TVShow version }
+            //} 
+        // Now we've colected all the variables necesarry to create a ContentList object using the constructor. After creating, add to the empty ArrayList of ContentLists.
+
         return this.contentLists;
     }
 

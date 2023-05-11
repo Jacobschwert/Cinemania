@@ -1,7 +1,9 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Review extends Feedback{
     private String summary;
@@ -21,9 +23,12 @@ public class Review extends Feedback{
     //Contructor for new review object
     public Review(String summary, int rating, Content reviewTarget, Account feedbackAuthor) throws IllegalArgumentException {
         this(summary, rating, 0);
+        this.summary = summary;
+        this.rating = rating;
         targetID = reviewTarget.getContentID();
         this.feedbackAuthor = feedbackAuthor;
-        queryString = "INSERT INTO review(text, likes, review_id, author_id) VALUES('" + summary + "', " + likes + ", " + targetID + ", " + feedbackAuthor.getAccountNumber() + ");";
+        generateID();
+        queryString = "INSERT INTO review(reviewContent, likes, feedbackID, feedbackAuthor, targetID) VALUES('" + summary + "', " + likes + ", " + feedbackID + ", " + feedbackAuthor.getAccountNumber() + ", " + targetID  + ");";
         try {
             query.executeUpdate(queryString);
         } catch(SQLException e) {
@@ -44,11 +49,31 @@ public class Review extends Feedback{
         this.likes = likes;
     }
 
+    public void generateID() {
+        Random rand = new Random();
+        Boolean moveOn = false;
+        int number = 0;
+        while (moveOn == false){ //Generate feedbackID
+            number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
+            queryString = "SELECT feedbackID FROM review WHERE feedbackID = " + number + ";" ;
+            ResultSet rs;
+            try{
+                rs = query.executeQuery(queryString);
+                if (!rs.next()) {
+                    this.feedbackID = number;
+                    moveOn = true;
+                }
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+    }
+}
+    
     //Method for adding likes to a review
     @Override
     public void addLike() {
         this.likes++;
-        queryString = "UPDATE review SET likes = " + likes + " WHERE feedback_id = " + feedbackID + ";";
+        queryString = "UPDATE review SET likes = " + likes + " WHERE feedbackID = " + feedbackID + ";";
         try {
             query.executeUpdate(queryString);
             System.out.println("Like added successfully.");
@@ -62,7 +87,7 @@ public class Review extends Feedback{
     public void removeLike() {
         if (this.likes > 0) {
             this.likes--;
-            queryString = "UPDATE review SET likes = " + likes + " WHERE feedback_id = " + feedbackID + ";";
+            queryString = "UPDATE review SET likes = " + likes + " WHERE feedbackID = " + feedbackID + ";";
             try {
                 query.executeUpdate(queryString);
                 System.out.println("Like removed successfully.");
@@ -80,7 +105,7 @@ public class Review extends Feedback{
         String response = scanner.nextLine();
         scanner.close();
         if(response.equalsIgnoreCase("Y")){
-            queryString = "DELETE FROM review WHERE feedback_id = " + feedbackID + ";";
+            queryString = "DELETE FROM review WHERE feedbackID = " + feedbackID + ";";
             setFeedbackSummary(null);
             setRating(0);
             try{
@@ -114,7 +139,7 @@ public class Review extends Feedback{
             }
             this.summary = newSummary;
             this.rating = newRating;
-            queryString = "UPDATE review SET text = '" + newSummary + "', rating = " + newRating + " WHERE feedback_id = " + feedbackID + ";";
+            queryString = "UPDATE review SET reviewContent = '" + newSummary + "', rating = " + newRating + " WHERE feedbackID = " + feedbackID + ";";
             try {
                 query.executeUpdate(queryString);
                 System.out.println("Review has been edited successfully");
@@ -184,14 +209,39 @@ public class Review extends Feedback{
     //Overridden toString method that outputs the summary and rating of a review, along with its list of comments left on it
     @Override
     public String toString() {
-        String comments = "";
-        if(commentList != null && commentList.size() > 0) {
-            comments = "\nComments:\n";
-            for(Comment c : commentList) {
-                comments += "\t" + c.toString() + "\n";
-            }
-        }
-        return feedbackAuthor.getUName() + " Says\nSummary: " + summary + "\n" + "Rating: " + rating + comments;
+        return feedbackAuthor.getUName() + " Says\nSummary: " + summary + "\n" + "Rating: " + rating;
     }
-    
+
+
+    public static void main(String[] args) {
+        Content content = new Movie(
+            1234,
+            "The Great Gatsby",
+            "A film adaptation of the novel by F. Scott Fitzgerald about the decadence and excess of the Roaring Twenties.",
+            new String[] { "Fiction", "Classic" },
+            new int[] { 1, 2 },
+            4.5f,
+            new ArrayList<Review>(),
+            new String[] { "Amazon", "Google Play", "Apple" },
+            new String[] { "Netflix", "Hulu" },
+            new String[] { "Prime Video", "HBO Max" });
+            Account test = new Account("ted", "email", "description", "password");
+            Review review = new Review("Good movie", 5, content, test);
+            System.out.println("Show Creation");
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+            System.out.println("\n\n\nAdding Likes....");
+            review.addLike();
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+            System.out.println("\n\n\nRemoving Likes");
+            review.removeLike();
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+            System.out.println("Edit Review");
+            review.editFeedback();
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+        }
 }
+

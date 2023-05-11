@@ -69,7 +69,7 @@ CREATE TABLE watchStatus (
 
 CREATE TABLE review (
     feedbackID INTEGER PRIMARY KEY,
-    feedbackContent TEXT,
+    targetID INTEGER,
     likes INTEGER,
     feedbackAuthor INTEGER,
     comments TEXT,

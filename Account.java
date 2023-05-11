@@ -153,7 +153,7 @@ public class Account {
     }
 
     public void setDescription(String description) {
-        queryString = "UPDATE account SET descr = '" + description + "' WHERE accountID = " + this.accountID + ";";
+        queryString = "UPDATE account SET description = '" + description + "' WHERE accountID = " + this.accountID + ";";
         try{
             query.executeUpdate(queryString);
         } catch(SQLException e){

@@ -1,15 +1,12 @@
 import org.junit.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.*;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ReviewTest {
     private Review review;
-    private FeedbackFactory feedbackFactory;
     private Content content;
     private Account account;
     
@@ -31,8 +28,6 @@ public class ReviewTest {
         account = new Account("johndoe", "johndoe@example.com", "A new user", "password123");
         // Create a new review object with valid parameters
         review = new Review("This is a great movie!", 5, content, account);
-        // Create a FeedbackFactory to handle creation and retreival of the review
-        feedbackFactory = new FeedbackFactory();
     }
 
     @Test

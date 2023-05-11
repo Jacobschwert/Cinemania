@@ -79,7 +79,7 @@ public class SearchController {
             switch(choice){
                 case 1:
                     // Begin the process of creating a review here.
-                    creationController.createReview();
+                    //creationController.createReview();
                     break;
                 case 2:
                     // Display reviews here, then, allow the user to pick a review

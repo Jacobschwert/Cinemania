@@ -1,7 +1,9 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Review extends Feedback{
     private String summary;
@@ -23,7 +25,8 @@ public class Review extends Feedback{
         this(summary, rating, 0);
         targetID = reviewTarget.getContentID();
         this.feedbackAuthor = feedbackAuthor;
-        queryString = "INSERT INTO review(text, likes, review_id, author_id) VALUES('" + summary + "', " + likes + ", " + targetID + ", " + feedbackAuthor.getAccountNumber() + ");";
+        generateID();
+        queryString = "INSERT INTO review(reviewContent, likes, feedbackID, feedbackAuthor, targetID) VALUES('" + summary + "', " + likes + ", " + feedbackID + ", " + feedbackAuthor.getAccountNumber() + ", " + targetID  + ");";
         try {
             query.executeUpdate(queryString);
         } catch(SQLException e) {
@@ -44,6 +47,26 @@ public class Review extends Feedback{
         this.likes = likes;
     }
 
+    public void generateID() {
+        Random rand = new Random();
+        Boolean moveOn = false;
+        int number = 0;
+        while (moveOn == false){ //Generate accountID
+            number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
+            queryString = "SELECT feedbackID FROM review WHERE feedbackID = " + number + ";" ;
+            ResultSet rs;
+            try{
+                rs = query.executeQuery(queryString);
+                if (!rs.next()) {
+                    this.feedbackID = number;
+                    moveOn = true;
+                }
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+    }
+}
+    
     //Method for adding likes to a review
     @Override
     public void addLike() {
@@ -193,5 +216,25 @@ public class Review extends Feedback{
         }
         return feedbackAuthor.getUName() + " Says\nSummary: " + summary + "\n" + "Rating: " + rating + comments;
     }
-    
+
+
+    public static void main(String[] args) {
+        Content content = new Movie(
+            1234,
+            "The Great Gatsby",
+            "A film adaptation of the novel by F. Scott Fitzgerald about the decadence and excess of the Roaring Twenties.",
+            new String[] { "Fiction", "Classic" },
+            new int[] { 1, 2 },
+            4.5f,
+            new ArrayList<Review>(),
+            new String[] { "Amazon", "Google Play", "Apple" },
+            new String[] { "Netflix", "Hulu" },
+            new String[] { "Prime Video", "HBO Max" });
+            Account test = new Account("ted", "email", "description", "password");
+            System.out.println("Account Created");
+            Review review = new Review("sum", 5, content, test);
+            System.out.println("Review Created");
+            review.toString();
+        }
 }
+

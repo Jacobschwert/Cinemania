@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class CreationController {
 
-    public void createReview() {
+    public void createReview(Content content) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter review summary: ");
@@ -13,12 +13,8 @@ public class CreationController {
         System.out.println("Enter rating (1-5): ");
         int rating = scanner.nextInt();
 
-        try {
-            Review review = FeedbackFactory.createReview(summary, rating, null, null);
-            System.out.println("Review created: " + review.getFeedbackSummary());
-        } catch (SQLException e) {
-            System.out.println("Error creating review: " + e.getMessage());
-        }
+        Review review = new Review(summary, rating, content, MainController.user);
+        System.out.println("Review created: " + review.getFeedbackSummary());
 
         scanner.close();
     }

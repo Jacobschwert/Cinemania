@@ -53,7 +53,7 @@ public class Review extends Feedback{
         Random rand = new Random();
         Boolean moveOn = false;
         int number = 0;
-        while (moveOn == false){ //Generate accountID
+        while (moveOn == false){ //Generate feedbackID
             number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
             queryString = "SELECT feedbackID FROM review WHERE feedbackID = " + number + ";" ;
             ResultSet rs;
@@ -73,7 +73,7 @@ public class Review extends Feedback{
     @Override
     public void addLike() {
         this.likes++;
-        queryString = "UPDATE review SET likes = " + likes + " WHERE feedback_id = " + feedbackID + ";";
+        queryString = "UPDATE review SET likes = " + likes + " WHERE feedbackID = " + feedbackID + ";";
         try {
             query.executeUpdate(queryString);
             System.out.println("Like added successfully.");
@@ -87,7 +87,7 @@ public class Review extends Feedback{
     public void removeLike() {
         if (this.likes > 0) {
             this.likes--;
-            queryString = "UPDATE review SET likes = " + likes + " WHERE feedback_id = " + feedbackID + ";";
+            queryString = "UPDATE review SET likes = " + likes + " WHERE feedbackID = " + feedbackID + ";";
             try {
                 query.executeUpdate(queryString);
                 System.out.println("Like removed successfully.");
@@ -105,7 +105,7 @@ public class Review extends Feedback{
         String response = scanner.nextLine();
         scanner.close();
         if(response.equalsIgnoreCase("Y")){
-            queryString = "DELETE FROM review WHERE feedback_id = " + feedbackID + ";";
+            queryString = "DELETE FROM review WHERE feedbackID = " + feedbackID + ";";
             setFeedbackSummary(null);
             setRating(0);
             try{
@@ -139,7 +139,7 @@ public class Review extends Feedback{
             }
             this.summary = newSummary;
             this.rating = newRating;
-            queryString = "UPDATE review SET text = '" + newSummary + "', rating = " + newRating + " WHERE feedback_id = " + feedbackID + ";";
+            queryString = "UPDATE review SET reviewContent = '" + newSummary + "', rating = " + newRating + " WHERE feedbackID = " + feedbackID + ";";
             try {
                 query.executeUpdate(queryString);
                 System.out.println("Review has been edited successfully");
@@ -227,7 +227,21 @@ public class Review extends Feedback{
             new String[] { "Prime Video", "HBO Max" });
             Account test = new Account("ted", "email", "description", "password");
             Review review = new Review("Good movie", 5, content, test);
-            System.out.println("\n\n\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating());
+            System.out.println("Show Creation");
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+            System.out.println("\n\n\nAdding Likes....");
+            review.addLike();
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+            System.out.println("\n\n\nRemoving Likes");
+            review.removeLike();
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+            System.out.println("Edit Review");
+            review.editFeedback();
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
         }
 }
 

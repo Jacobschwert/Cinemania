@@ -33,7 +33,7 @@ public class SearchController {
                     System.out.println("Invalid Input, please enter a number matching a recommendation list index, or, type 'back' to go back.");
                 }
             }
-            if(viewingRecommendations == false) break;
+            if(!viewingRecommendations) break;
             ContentList selectedList = recommendationLists.get(choice - 1);
             ArrayList<Content> listContent = selectedList.getList();
             choice = 0;
@@ -44,6 +44,7 @@ public class SearchController {
             while(choice < 1 || choice > listContent.size()){
                 String userInput = scanner.nextLine().trim();
                 if(userInput.equalsIgnoreCase("back")){
+                    viewingRecommendations = false;
                     break;
                 }
                 try {
@@ -53,7 +54,10 @@ public class SearchController {
                     System.out.println("Invalid Input, please enter a number matching a content index, or, type 'back' to go back.");
                 }
             }
-
+            if(!viewingRecommendations){
+                viewingRecommendations = true;
+                continue;
+            }
             // Loop for selecting a specific content option
             // User should be able to: Create a Review, view reviews, and get access to watch status choices for a piece of content.
             // User should also be able to add content to content lists, but I'm guessing this will be implemented first

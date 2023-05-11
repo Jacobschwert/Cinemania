@@ -245,7 +245,8 @@ import java.sql.SQLException;
             case MOVIES_ACTION:
                 contentArrayList = generateMovieContentArrayList(rType);
                 contentListName = "Action Movies";
-                contentListDescription = "Popular Action Movies according to The Movie Database";     
+                contentListDescription = "Popular Action Movies according to The Movie Database";
+                break;     
             case MOVIES_ADVENTURE:
                 contentArrayList = generateMovieContentArrayList(rType);
                 contentListName = "Adventure Movies";
@@ -268,12 +269,12 @@ import java.sql.SQLException;
                 break;
             case TV_ACTION_ADVENTURE:
                 contentArrayList = generateTVContentArrayList(rType);
-                contentListName = "Popular Action & Adventure TV Shows";
+                contentListName = "Action & Adventure TV Shows";
                 contentListDescription = "Popular Action & Adventure Movies according to The Movie Database";  
                 break;
             case TV_MYSTERY:
                 contentArrayList = generateTVContentArrayList(rType);
-                contentListName = "Popular Mystery TV Shows";
+                contentListName = "Mystery TV Shows";
                 contentListDescription = "Popular Mystery Movies according to The Movie Database";  
                 break;
             case TV_COMEDY:
@@ -283,7 +284,7 @@ import java.sql.SQLException;
                 break;
             case TV_SCIFI_FANTASY:
                 contentArrayList = generateTVContentArrayList(rType);
-                contentListName = "Sci-Fi & Fantasy";
+                contentListName = "Sci-Fi & Fantasy TV Shows";
                 contentListDescription = "Popular Science Fiction and Fantasy TV Shows according to The Movie Database";  
                 break;
             default:

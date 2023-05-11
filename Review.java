@@ -23,6 +23,8 @@ public class Review extends Feedback{
     //Contructor for new review object
     public Review(String summary, int rating, Content reviewTarget, Account feedbackAuthor) throws IllegalArgumentException {
         this(summary, rating, 0);
+        this.summary = summary;
+        this.rating = rating;
         targetID = reviewTarget.getContentID();
         this.feedbackAuthor = feedbackAuthor;
         generateID();
@@ -207,14 +209,7 @@ public class Review extends Feedback{
     //Overridden toString method that outputs the summary and rating of a review, along with its list of comments left on it
     @Override
     public String toString() {
-        String comments = "";
-        if(commentList != null && commentList.size() > 0) {
-            comments = "\nComments:\n";
-            for(Comment c : commentList) {
-                comments += "\t" + c.toString() + "\n";
-            }
-        }
-        return feedbackAuthor.getUName() + " Says\nSummary: " + summary + "\n" + "Rating: " + rating + comments;
+        return feedbackAuthor.getUName() + " Says\nSummary: " + summary + "\n" + "Rating: " + rating;
     }
 
 
@@ -231,10 +226,8 @@ public class Review extends Feedback{
             new String[] { "Netflix", "Hulu" },
             new String[] { "Prime Video", "HBO Max" });
             Account test = new Account("ted", "email", "description", "password");
-            System.out.println("Account Created");
-            Review review = new Review("sum", 5, content, test);
-            System.out.println("Review Created");
-            review.toString();
+            Review review = new Review("Good movie", 5, content, test);
+            System.out.println("\n\n\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating());
         }
 }
 

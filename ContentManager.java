@@ -363,4 +363,12 @@ import java.sql.SQLException;
         return result;
     }
 
+      public static void main(String[] args) {
+        Account test1 = new Account("test1U", "test1E", "test1D", "test1P");
+        ContentManager cmTest = new ContentManager(test1.getCManage(), test1);
+        cmTest.addWatchStatus(0, 100); //The 0 here represents that the content: 100 has not been watched
+        System.out.println("Initial watch status of 100: " + cmTest.getWatchStatus(100));
+        cmTest.changeWatchStatus(1, 100); //This method changes the status to 1 indicating that 
+        System.out.println("Changed watch status of 100: " + cmTest.getWatchStatus(100));
+    }
 }

@@ -104,34 +104,37 @@ public class MainController {
     
     
     private void listContentOptions() {
-        System.out.println("1. View Reccomendations");
-        System.out.println("2. Search Content");
-        System.out.println("3: Search Users");
-        System.out.println("4: Go back");
-        // Get user input
-        int choice = Main.scanner.nextInt();
-        Main.scanner.nextLine();
-        
-        // Call appropriate method based on user input
-        if (choice == 1) {
+        boolean viewingContentOptions = true;
+        while(viewingContentOptions){
+            System.out.println("1. View Reccomendations");
+            System.out.println("2. Search Content");
+            System.out.println("3: Search Users");
+            System.out.println("4: Go back");
+            // Get user input
+            int choice = Main.scanner.nextInt();
+            Main.scanner.nextLine();
             
-            //searchController.viewReccomendations();
-        } 
-        else if (choice == 2) {
-            System.out.println("Search for a movie\nSearch:");
-            String search = Main.scanner.nextLine();
-            searchController.searchContent(search, cManage);
-        }
-        else if (choice == 3) {
-            
-            searchController.searchUsers();
-        } 
-        else if (choice == 4) {
-            
-            listStartupOptions();
-        }
-        else {
-            System.out.println("Invalid choice.");
+            // Call appropriate method based on user input
+            if (choice == 1) {
+                
+                searchController.viewRecommendations(cManage, creationController);
+            } 
+            else if (choice == 2) {
+                System.out.println("Search for a movie\nSearch:");
+                String search = Main.scanner.nextLine();
+                searchController.searchContent(search, cManage);
+            }
+            else if (choice == 3) {
+                
+                searchController.searchUsers();
+            } 
+            else if (choice == 4) {
+                viewingContentOptions = false;
+                listStartupOptions();
+            }
+            else {
+                System.out.println("Invalid choice.");
+            }
         }
     }
 }

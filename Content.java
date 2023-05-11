@@ -88,9 +88,9 @@ public abstract class Content {
         }
         if(buyProviders != null){
             stringBuilder.append("You can buy this content from:");
-            if(buyProviders.length > 0) stringBuilder.append(" ").append(buyProviders);
+            if(buyProviders.length > 0) stringBuilder.append(" ").append(buyProviders[0]);
             for(int i = 1; i < buyProviders.length; i++){
-                stringBuilder.append(", ").append(buyProviders);
+                stringBuilder.append(", ").append(buyProviders[i]);
             }
             stringBuilder.append("\n");
         }

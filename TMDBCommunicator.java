@@ -72,15 +72,14 @@ public class TMDBCommunicator {
     }
 
     // Get an array of lists containing information about where you can buy a movie to watch. This array corresponds to a list of movies that is passed in.
-    // Example JSON object: https://api.themoviedb.org/3/movie/550/watch/providers?api_key= (Requires an API KEY)
     // Note that arrays containing watch options, such as the buy array or flatrate array, can be null.
     public static TMDBWatchOption[] getTVWatchOptionsArray(TMDBTVResultList resultList){
         TMDBTVResult[] results = resultList.getResults();
         TMDBWatchOption[] returnList = new TMDBWatchOption[results.length];
         Gson gson = new Gson();
         for(int i = 0; i < results.length; i++){
-            int movieID = results[i].getId();
-            HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/movie/%d/watch/providers?api_key=%s", movieID, API_KEY));
+            int tvID = results[i].getId();
+            HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/tv/%d/watch/providers?api_key=%s", tvID, API_KEY));
             returnList[i] = gson.fromJson(getResponse.body(), TMDBWatchOption.class);
         }
         return returnList;
@@ -166,7 +165,7 @@ public class TMDBCommunicator {
     // Example JSON Object: https://api.themoviedb.org/3/discover/movie?api_key=&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=28
     // (Requires an API Key)
     private static TMDBTVResultList getPopularTVResultList(int genreId){
-        HttpResponse<String> getResponse = getRequestWithURL(String.format("https://api.themoviedb.org/3/discover/tv?api_key="+ API_KEY + "&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=" + genreId));
+        HttpResponse<String> getResponse = getRequestWithURL("https://api.themoviedb.org/3/discover/tv?api_key="+ API_KEY + "&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false&with_original_language=en&with_genres=" + genreId);
         Gson gson = new Gson();
         TMDBTVResultList tvResultList = gson.fromJson(getResponse.body(), TMDBTVResultList.class);
         return tvResultList;

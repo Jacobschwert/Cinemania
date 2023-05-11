@@ -8,7 +8,7 @@ public class CreationController {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter review summary: ");
-        String summary = scanner.next();
+        String summary = scanner.nextLine();
 
         System.out.println("Enter rating (1-5): ");
         int rating = scanner.nextInt();

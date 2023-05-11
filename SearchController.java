@@ -33,14 +33,14 @@ public class SearchController {
                     System.out.println("Invalid Input, please enter a number matching a recommendation list index, or, type 'back' to go back.");
                 }
             }
-
+            if(viewingRecommendations == false) break;
             ContentList selectedList = recommendationLists.get(choice - 1);
             ArrayList<Content> listContent = selectedList.getList();
             choice = 0;
             // Loop for selecting a specific piece of content in a content list
-            System.out.println("Enter a number matching a piece of content, or, type 'back' to go back to selecting a list.");
-            boolean isEmpty = selectedList.displayList();
+            boolean isEmpty = !selectedList.displayList();
             if(isEmpty) break;
+            System.out.println("Enter a number matching a piece of content, or, type 'back' to go back to selecting a list.");
             while(choice < 1 || choice > listContent.size()){
                 String userInput = scanner.nextLine().trim();
                 if(userInput.equalsIgnoreCase("back")){
@@ -61,7 +61,7 @@ public class SearchController {
             Content selectedContent = listContent.get(choice - 1);
             choice = 0;
             int numberOfChoices = 2;
-            selectedContent.toString(); // toString method will display necesarry information about the selected piece of content.
+            System.out.println(selectedContent.toString()); // toString method will display necesarry information about the selected piece of content.
             System.out.println("Two available options: 1. Create Review or 2. View User Reviews. Please type in a number corresponding to an option index, or type 'back' to go back");
             if(isEmpty) break;
             while(choice < 1 || choice > numberOfChoices){
@@ -79,7 +79,7 @@ public class SearchController {
             switch(choice){
                 case 1:
                     // Begin the process of creating a review here.
-                    creationController.createReview();
+                    // creationController.createReview();
                     break;
                 case 2:
                     // Display reviews here, then, allow the user to pick a review
@@ -87,6 +87,8 @@ public class SearchController {
                     // If the user chooses to view comments, display the comments (numbering each comment),
                     // Allow the user to pick a comment, allow the user to like the comment or unlike the comment.
                     // Maybe it would be best if we gave reviews and comments their own toString methods and used those to help out with this part?
+                    break;
+                default:
                     break;
             }
 

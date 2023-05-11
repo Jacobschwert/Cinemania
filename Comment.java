@@ -24,9 +24,10 @@ public class Comment extends Feedback{
         if (text.length() > 150) {
             throw new IllegalArgumentException("Comment cannot exceed 150 characters");
         }
+        this.feedbackID = feedbackAuthor.getAccountNumber();
         this.text = text;
         this.likes = 0;
-        targetID = commentTarget.getFeedbackID();
+        this.targetID = commentTarget.getFeedbackID();
         this.feedbackAuthor = feedbackAuthor;
         queryString = "INSERT INTO comment(feedbackContent, likes, review_ID, feedbackAuthor) VALUES('" + text + "', " + likes + ", " + commentTarget.getFeedbackID() + ", " + feedbackAuthor.getAccountNumber() + ");";
         try {
@@ -110,7 +111,7 @@ public class Comment extends Feedback{
         int number = 0;
         while (moveOn == false){ //Generate commentID
             number = rand.nextInt(88888) + 11111; //This gives a range of 11111 - 99999
-            queryString = "SELECT feedbackAuthor FROM account WHERE feedbackAuthor = " + number + ";" ;
+            queryString = "SELECT feedbackAuthor FROM comment WHERE feedbackAuthor = " + number + ";" ;
             ResultSet rs;
             try{
                 rs = query.executeQuery(queryString);
@@ -175,4 +176,36 @@ public class Comment extends Feedback{
         return "Comment by " + feedbackAuthor.getUName() + ": " + text + " (Likes: " + likes + ")";
     }
 
+    public static void main(String[] args) {
+        Content content = new Movie(
+            1234,
+            "The Great Gatsby",
+            "A film adaptation of the novel by F. Scott Fitzgerald about the decadence and excess of the Roaring Twenties.",
+            new String[] { "Fiction", "Classic" },
+            new int[] { 1, 2 },
+            4.5f,
+            new ArrayList<Review>(),
+            new String[] { "Amazon", "Google Play", "Apple" },
+            new String[] { "Netflix", "Hulu" },
+            new String[] { "Prime Video", "HBO Max" });
+            Account test = new Account("ted", "email", "description", "password");
+            Review review = new Review("Good movie", 5, content, test);
+
+            Comment comment = new Comment("This is a new comment",review, test);
+            System.out.println("Show Creation");
+            System.out.println("\n" + test.getUName() + " says...\nSummary: " + review.getFeedbackSummary() + "\n" + "Rating: " + review.getRating() + "\nLikes: " + review.getLikes());
+
+
+
+            System.out.println("Show Comment creation");
+            System.out.println(comment.getFeedbackSummary());
+            System.out.println("Add like");
+            comment.addLike();
+            System.out.println("Number of likes: "+ comment.getLikes());
+            comment.removeLike();
+            System.out.println("Number of likes: "+ comment.getLikes());
+            comment.editFeedback();
+            System.out.println(comment.getFeedbackSummary());
+
+        }
 }
